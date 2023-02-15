@@ -1,0 +1,11 @@
+@font-face {
+    font-family: ArticNormal;
+    src: url('../../public/fonts/articulat-cf/ArticulatCF-Normal.otf');
+    font-family: ArticBold;
+    src: url('../../public/fonts/articulat-cf/ArticulatCF-Bold.otf');
+}
+
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;

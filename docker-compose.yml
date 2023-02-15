@@ -1,0 +1,64 @@
+version: '3.8'
+
+services:
+  webserver:
+    image: nginx:alpine
+    container_name: nginx-webservices
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "8080:80"
+      - "443:443"
+    volumes:
+      - ./:/development
+      - ./nginx/conf.d/:/development/nginx/conf.d/
+      - ./nginx/conf.d/user.conf:/development/nginx/sites-enabled/users
+    networks:
+      - app-network
+      - app-shared
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: desa-services
+    restart: unless-stopped
+    tty: true
+    working_dir: /development
+    volumes:
+      - ./:/development/desa-app
+    networks:
+      - app-network
+      - app-shared
+    expose:
+      - "8080:8000"
+    depends_on:
+      - webserver
+
+
+  db:
+    image: mysql:8.0
+    container_name: desa-db
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: db_admin_desa
+      MYSQL_ROOT_PASSWORD: "rahasia"
+      MYSQL_PASSWORD: "rahasia"
+      MYSQL_USER: root
+      SERVICE_TAGS: dev
+      SERVICE_NAME: mysql
+    volumes:
+      - ./:/./mysql
+    networks:
+      - app-network
+
+
+networks:
+  app-network:
+  app-shared:
+    driver: bridge
+
+volumes:
+  data:
+    driver: local
+
