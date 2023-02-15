@@ -5,10 +5,9 @@ import useRoute from '@/Hooks/useRoute';
 import AuthenticationCard from '@/Components/AuthenticationCard';
 import Checkbox from '@/Components/Checkbox';
 import InputLabel from '@/Components/InputLabel';
-import PrimaryButton from '@/Components/PrimaryButton';
+import { Button as PrimaryButton } from "@nextui-org/react";
 import TextInput from '@/Components/TextInput';
 import InputError from '@/Components/InputError';
-import ApplicationLogo from '@/Components/ApplicationLogo';
 
 interface Props {
   canResetPassword: boolean;
@@ -32,7 +31,7 @@ export default function Login({ canResetPassword, status }: Props) {
 
   return (
     <AuthenticationCard>
-      <Head title="login" />
+      <Head title="Login" />
 
       {status && (
         <div className="mb-4 font-medium text-sm text-green-600">{status}</div>
@@ -44,7 +43,7 @@ export default function Login({ canResetPassword, status }: Props) {
           <TextInput
             id="email"
             type="email"
-            className="mt-1 block w-full"
+            className="mt-1 block w-[400px]"
             value={form.data.email}
             onChange={e => form.setData('email', e.currentTarget.value)}
             required
@@ -58,7 +57,7 @@ export default function Login({ canResetPassword, status }: Props) {
           <TextInput
             id="password"
             type="password"
-            className="mt-1 block w-full"
+            className="mt-1 block w-[400px]"
             value={form.data.password}
             onChange={e => form.setData('password', e.currentTarget.value)}
             required
@@ -101,10 +100,10 @@ export default function Login({ canResetPassword, status }: Props) {
             </InertiaLink> */}
 
             <PrimaryButton
-              className={classNames('ml-4 bg-blue-600', { 'opacity-25': form.processing })}
+              className={classNames('ml-4 bg-mainblue', { 'opacity-25': form.processing })}
               disabled={form.processing}
             >
-              Log in
+             <p className='font-sans text-putih font-bold'>Login</p>
             </PrimaryButton>
           </div>
         </div>
