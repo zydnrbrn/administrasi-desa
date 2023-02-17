@@ -100,8 +100,8 @@ export default function Login({ canResetPassword, status }: Props) {
             </InertiaLink> */}
 
             <PrimaryButton
-              className={classNames('ml-4 bg-mainblue', { 'opacity-25': form.processing })}
-              disabled={form.processing}
+              className={classNames('ml-4 md:ml-[100px]', { 'opacity-10': form.processing })}
+              disabled={form.processing} type='submit' css={{ backgroundColor: "#0038FF" }}
             >
              <p className='font-sans text-putih font-bold'>Login</p>
             </PrimaryButton>
