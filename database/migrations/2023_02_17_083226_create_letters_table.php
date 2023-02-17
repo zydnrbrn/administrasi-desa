@@ -14,8 +14,18 @@ return new class extends Migration
     public function up()
     {
         Schema::create('letters', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id');
+            $table->integer('NIK');
+            $table->enum('type', ['SKTM', 'SKP', 'SKK', 'SKJ']);
+            $table->string('title');
+            $table->string('header');
+            $table->string('content');
             $table->timestamps();
+
+            $table->foreign('NIK')
+                    ->references('NIK')
+                    ->on('residents')
+                    ->onDelete('cascade');
         });
     }
 

@@ -14,7 +14,9 @@ return new class extends Migration
     public function up()
     {
         Schema::create('roles', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id');
+            $table->string('name');
+            $table->string('access');
             $table->timestamps();
         });
     }
