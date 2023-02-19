@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Role extends Model
 {
+    protected $table = 'roles';
+    protected $guarded = [];
     use HasFactory;
 
     public static function boot()
