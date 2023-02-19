@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Letter extends Model
 {
+    protected $table = 'letters';
+    protected $guarded = [];
     use HasFactory;
 
     public static function boot()
