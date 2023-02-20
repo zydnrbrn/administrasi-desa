@@ -5,7 +5,7 @@ import useRoute from '@/Hooks/useRoute';
 import AuthenticationCard from '@/Components/AuthenticationCard';
 import Checkbox from '@/Components/Checkbox';
 import InputLabel from '@/Components/InputLabel';
-import { Button as PrimaryButton } from "@nextui-org/react";
+import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
 import InputError from '@/Components/InputError';
 
@@ -101,7 +101,7 @@ export default function Login({ canResetPassword, status }: Props) {
 
             <PrimaryButton
               className={classNames('ml-4 md:ml-[100px]', { 'opacity-10': form.processing })}
-              disabled={form.processing} type='submit' css={{ backgroundColor: "#0038FF" }}
+              disabled={form.processing} type='submit'
             >
              <p className='font-sans text-putih font-bold'>Login</p>
             </PrimaryButton>
