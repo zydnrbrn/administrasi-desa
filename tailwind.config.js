@@ -16,6 +16,10 @@ module.exports = {
                 sans: ['ArticNormal', ...defaultTheme.fontFamily.sans],
             },
         },
+        colors: {
+            'mainblue': '#0038FF',
+            'putih': '#FFFFFF'
+        }
     },
 
     plugins: [require('@tailwindcss/forms'), require('@tailwindcss/typography')],
