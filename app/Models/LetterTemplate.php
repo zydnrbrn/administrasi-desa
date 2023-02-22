@@ -6,9 +6,9 @@ use Webpatser\Uuid\Uuid;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Letter extends Model
+class LetterTemplate extends Model
 {
-    protected $table = 'letters';
+    protected $table = 'letter_templates';
     protected $guarded = [];
     use HasFactory;
 

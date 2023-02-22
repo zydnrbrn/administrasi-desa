@@ -1,4 +1,3 @@
--- Active: 1676897150627@@127.0.0.1@3306@db_desa
 <?php
 
 use Illuminate\Database\Migrations\Migration;
@@ -14,14 +13,20 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('letter_templates', function (Blueprint $table) {
+        Schema::create('skjs', function (Blueprint $table) {
             $table->uuid('id');
-            $table->string('name');
+            $table->string('no_surat');
+            $table->integer('NIK');
             $table->string('title');
             $table->string('header');
             $table->string('content');
             $table->string('footer');
             $table->timestamps();
+
+            $table->foreign('NIK')
+                    ->references('NIK')
+                    ->on('residents')
+                    ->onDelete('cascade');
         });
     }
 
@@ -32,6 +37,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('letters');
+        Schema::dropIfExists('skjs');
     }
 };

@@ -28,7 +28,7 @@ services:
     networks:
       - app-network
     expose:
-      - "8080:8000"
+      - "8000:8000"
     depends_on:
       - webserver
 

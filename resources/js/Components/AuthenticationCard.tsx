@@ -1,6 +1,5 @@
 import React, { PropsWithChildren } from 'react';
 import ApplicationLogo from './ApplicationLogo';
-import { Image } from '@nextui-org/react';
 
 export default function AuthenticationCard({
   children,
@@ -16,8 +15,8 @@ export default function AuthenticationCard({
         </div>
         {children}
         </div>
-        <div className='px-[200px] py-[100px]'>
-            <Image className='md:w-[300px] md:h-[600px] invisible md:visible' src='https://ik.imagekit.io/3upgjbxqx/administrasi-desa/desa-bunijaya/undraw_Small_town_re_7mcn.png?ik-sdk-version=javascript-1.4.3&updatedAt=1676273951355'></Image>
+        <div className='container'>
+            <img className='w-[297px] h-[582px] invisible md:visible' src='https://ik.imagekit.io/3upgjbxqx/administrasi-desa/desa-bunijaya/undraw_Small_town_re_7mcn.png?ik-sdk-version=javascript-1.4.3&updatedAt=1676273951355' width={297} height={582}></img>
         {/* <img className='md:w-[297] md:h-[582] invisible md:visible' src="https://ik.imagekit.io/3upgjbxqx/administrasi-desa/desa-bunijaya/undraw_Small_town_re_7mcn.png?ik-sdk-version=javascript-1.4.3&updatedAt=1676273951355" /> */}
         </div>
       </div>
