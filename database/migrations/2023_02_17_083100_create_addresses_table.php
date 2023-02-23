@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('address', function (Blueprint $table) {
 			$table->uuid('id')->primary();
-			$table->uuid('user_id');
+			$table->uuid('resident_id');
 			$table->unsignedBigInteger('province_id')->nullable();
 			$table->unsignedBigInteger('city_id')->nullable();
 			$table->unsignedBigInteger('district_id')->nullable();
@@ -26,13 +26,16 @@ return new class extends Migration
 			$table->string('village', 100);
 			$table->char('RT', 4)->nullable();
 			$table->char('RW', 4)->nullable();
-			$table->string('postal_code', 10)->nullable();
 			$table->text('address_detail')->nullable();
 			$table->integer('created_at');
 			$table->integer('updated_at');
 		});
 
 		Schema::table('address', function (Blueprint $table) {
+            $table->foreign('resident_id')
+                    ->references('id')
+                    ->on('address')
+                    ->onDelete('cascade');
 			$table->foreign('province_id')
 				->references('id')
 				->on(config('laravolt.indonesia.table_prefix') . 'provinces')
