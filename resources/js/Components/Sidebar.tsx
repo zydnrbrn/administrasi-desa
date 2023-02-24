@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import React, { Children, ReactNode } from 'react';
 import {
   IconButton,
   Avatar,
@@ -36,6 +36,7 @@ import { IconType } from 'react-icons';
 import { ReactText } from 'react';
 import { InertiaLink } from '@inertiajs/inertia-react'
 import ApplicationMark from './ApplicationMark'
+import usePage from '@/Hooks/useTypedPage'
 
 interface LinkItemProps {
   name: string;
@@ -48,6 +49,8 @@ const LinkItems: Array<LinkItemProps> = [
   { name: 'Favourites', icon: FiStar },
   { name: 'Settings', icon: FiSettings },
 ];
+
+// const data = usePage().props;
 
 export default function SidebarWithHeader({
   children,
@@ -100,9 +103,11 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
       h="full"
       {...rest}>
       <Flex h="20" alignItems="center" mx="8" justifyContent="space-between">
-        <Text fontSize="2xl" fontFamily="monospace" fontWeight="bold">
-          Logo
-        </Text>
+      <div className="flex-shrink-0 flex items-center">
+                  <InertiaLink href={route('dashboard')}>
+                    <ApplicationMark className="block h-9 w-auto" />
+                  </InertiaLink>
+                </div>
         <CloseButton display={{ base: 'flex', md: 'none' }} onClick={onClose} />
       </Flex>
       {LinkItems.map((link) => (
@@ -173,11 +178,7 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
       />
 
       {/* <!-- Logo --> */}
-      <div className="flex-shrink-0 flex items-center">
-                  <InertiaLink href={route('dashboard')}>
-                    <ApplicationMark className="block h-9 w-auto" />
-                  </InertiaLink>
-                </div>
+
 
       <HStack spacing={{ base: '0', md: '6' }}>
         <IconButton
@@ -204,7 +205,7 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
                   alignItems="flex-start"
                   spacing="1px"
                   ml="2">
-                  <Text fontSize="sm">Justina Clark</Text>
+                  <Text fontSize="sm">Zidan</Text>
                   <Text fontSize="xs" color="gray.600">
                     Admin
                   </Text>

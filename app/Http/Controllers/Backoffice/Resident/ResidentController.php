@@ -19,11 +19,11 @@ class ResidentController extends Controller
             $query = "SELECT * FROM residents";
             $resident = DB::select($query);
             if($resident) {
-                return Inertia::render('Handler/Success/Congrat', [
+                return Inertia::render('Resident', [
                     'success'   => 'Berhasil mendapatkan list penduduk .'
                 ]);
             } else {
-                return Inertia::render('Handler/Failed/Error', [
+                return Inertia::render('Resident', [
                     'failed'    => 'Gagal mendapatkan list penduduk .'
                 ]);
             }
