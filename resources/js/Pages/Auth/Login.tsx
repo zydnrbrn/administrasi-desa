@@ -1,13 +1,12 @@
 import { InertiaLink, useForm, Head } from '@inertiajs/inertia-react';
-import classNames from 'classnames';
 import React from 'react';
 import useRoute from '@/Hooks/useRoute';
 import AuthenticationCard from '@/Components/AuthenticationCard';
 import Checkbox from '@/Components/Checkbox';
 import InputLabel from '@/Components/InputLabel';
-import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
 import InputError from '@/Components/InputError';
+import { Button } from 'react-bootstrap';
 
 interface Props {
   canResetPassword: boolean;
@@ -43,7 +42,7 @@ export default function Login({ canResetPassword, status }: Props) {
           <TextInput
             id="email"
             type="email"
-            className="mt-1 block w-[400px]"
+            className="mt-1 block w-[300px] md:w-[400px]"
             value={form.data.email}
             onChange={e => form.setData('email', e.currentTarget.value)}
             required
@@ -57,26 +56,13 @@ export default function Login({ canResetPassword, status }: Props) {
           <TextInput
             id="password"
             type="password"
-            className="mt-1 block w-[400px]"
+            className="mt-1 block w-[300px] md:w-[400px]"
             value={form.data.password}
             onChange={e => form.setData('password', e.currentTarget.value)}
             required
             autoComplete="current-password"
           />
           <InputError className="mt-2" message={form.errors.password} />
-        </div>
-
-        <div className="mt-4">
-          <label className="flex items-center">
-            <Checkbox
-              name="remember"
-              checked={form.data.remember === 'on'}
-              onChange={e =>
-                form.setData('remember', e.currentTarget.checked ? 'on' : '')
-              }
-            />
-            <span className="ml-2 text-sm text-gray-600">Remember me</span>
-          </label>
         </div>
 
         <div className="flex flex-col space-y-2 md:flex-row md:items-center md:justify-between md:space-y-0 mt-4">
@@ -91,7 +77,7 @@ export default function Login({ canResetPassword, status }: Props) {
             </div>
           )} */}
 
-          <div className="flex items-center justify-end">
+          <div className="flex items-center">
             {/* <InertiaLink
               href={route('register')}
               className="underline text-sm text-gray-600 hover:text-gray-900"
@@ -99,12 +85,16 @@ export default function Login({ canResetPassword, status }: Props) {
               Need an account?
             </InertiaLink> */}
 
-            <PrimaryButton
+            {/* <PrimaryButton
               className={classNames('ml-4 md:ml-[100px]', { 'opacity-10': form.processing })}
               disabled={form.processing} type='submit'
             >
              <p className='font-sans text-putih font-bold'>Login</p>
-            </PrimaryButton>
+            </PrimaryButton> */}
+            <Button className='ml-[100px] md:ml-[100px] w-[100px] h-[35px] rounded-md bg-mainblue text-putih font-semibold md:mt-[20px]'
+              disabled={form.processing} type='submit'>
+                Login
+            </Button>
           </div>
         </div>
       </form>
