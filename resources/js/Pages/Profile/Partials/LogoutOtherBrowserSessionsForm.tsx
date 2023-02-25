@@ -128,6 +128,7 @@ export default function LogoutOtherBrowserSessions({ sessions }: Props) {
       </div>
 
       {/* <!-- Log Out Other Devices Confirmation Modal --> */}
+      <div className="bg-putih">
       <DialogModal isOpen={confirmingLogout} onClose={closeModal}>
         <DialogModal.Content title={'Log Out Other Browser Sessions'}>
           Please enter your password to confirm you would like to log out of
@@ -158,6 +159,7 @@ export default function LogoutOtherBrowserSessions({ sessions }: Props) {
           </PrimaryButton>
         </DialogModal.Footer>
       </DialogModal>
+      </div>
     </ActionSection>
   );
 }

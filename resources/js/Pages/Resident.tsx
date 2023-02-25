@@ -1,14 +1,14 @@
 import React from "react"
 import AppLayout from "@/Layouts/AppLayout"
 
-export default function Letter() {
+export default function Resident() {
     return(
         <>
         <AppLayout
-      title="Surat"
+      title="Penduduk"
       renderHeader={() => (
         <h2 className="font-semibold text-3xl text-gray-800 leading-tight">
-          Surat Menyurat
+          Data Penduduk
         </h2>
       )}
     >

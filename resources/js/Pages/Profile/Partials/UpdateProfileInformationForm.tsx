@@ -78,19 +78,19 @@ export default function UpdateProfileInformationForm({ user }: Props) {
   return (
     <FormSection
       onSubmit={updateProfileInformation}
-      title={'Profile Information'}
-      description={`Update your account's profile information and email address.`}
+      title={'Informasi Akun'}
+      description={`Perbarui nama dan email akun anda .`}
       renderActions={() => (
         <>
           <ActionMessage on={form.recentlySuccessful} className="mr-3">
-            Saved.
+            Berhasil disimpan !
           </ActionMessage>
 
           <PrimaryButton
             className={classNames({ 'opacity-25': form.processing })}
             disabled={form.processing}
           >
-            Save
+            Simpan
           </PrimaryButton>
         </>
       )}

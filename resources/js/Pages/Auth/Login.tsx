@@ -1,8 +1,7 @@
-import { InertiaLink, useForm, Head } from '@inertiajs/inertia-react';
+import { useForm, Head } from '@inertiajs/inertia-react';
 import React from 'react';
 import useRoute from '@/Hooks/useRoute';
 import AuthenticationCard from '@/Components/AuthenticationCard';
-import Checkbox from '@/Components/Checkbox';
 import InputLabel from '@/Components/InputLabel';
 import TextInput from '@/Components/TextInput';
 import InputError from '@/Components/InputError';

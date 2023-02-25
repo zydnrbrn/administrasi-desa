@@ -7,7 +7,7 @@ DialogModal.Content = function DialogModalContent({
 }: PropsWithChildren<{ title: string }>) {
   return (
     <div className="px-6 py-4">
-      <div className="text-lg">{title}</div>
+      <div className="text-lg bg-putih">{title}</div>
 
       <div className="mt-4">{children}</div>
     </div>
@@ -17,7 +17,7 @@ DialogModal.Content = function DialogModalContent({
 DialogModal.Footer = function DialogModalFooter({
   children,
 }: PropsWithChildren<Record<string, unknown>>) {
-  return <div className="px-6 py-4 bg-gray-100 text-right">{children}</div>;
+  return <div className="px-6 py-4 bg-putih text-right">{children}</div>;
 };
 
 export default function DialogModal({
