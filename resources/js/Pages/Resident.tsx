@@ -7,7 +7,7 @@ export default function Resident() {
         <AppLayout
       title="Penduduk"
       renderHeader={() => (
-        <h2 className="font-semibold text-xl text-gray-800 leading-tight">
+        <h2 className="font-semibold text-3xl text-gray-800 leading-tight">
           Data Penduduk
         </h2>
       )}

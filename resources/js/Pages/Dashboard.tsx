@@ -1,6 +1,10 @@
 import React from 'react';
 import AppLayout from '@/Layouts/AppLayout';
 import useTypedPage from '@/Hooks/useTypedPage';
+import {
+    TbFriends,
+    TbFileDescription,
+} from 'react-icons/tb'
 
 export default function Dashboard() {
     const data = useTypedPage().props;
@@ -9,16 +13,38 @@ export default function Dashboard() {
     <AppLayout
       title="Dashboard"
       renderHeader={() => (
-        <h2 className="font-semibold text-xl text-gray-800">
+        <h2 className="font-semibold text-3xl text-gray-800">
           Dashboard
         </h2>
       )}
     >
-      <div className="py-12">
-        <div className="max-w-7xl">
-          <div className="overflow-hidden">
-            { data.user.name } .
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dicta vero temporibus deserunt accusantium quaerat sint, illo enim, commodi, sit laudantium exercitationem! Ipsa dignissimos sequi alias, consectetur corrupti saepe voluptatem odit! Animi in exercitationem ad, soluta sapiente maiores est quibusdam quam minima, suscipit sint officiis numquam quidem eveniet dolorem recusandae labore sit a voluptate? Accusantium a blanditiis beatae, laboriosam magni quod pariatur maxime consequuntur laudantium provident iure corrupti aut fugiat impedit minus ea numquam molestias veniam aspernatur dolore at quos enim harum ex? Quam modi enim ratione quod tenetur odit doloremque possimus laudantium sunt ipsam quae, tempora ab saepe nam nostrum nesciunt magni eos itaque voluptatibus maxime suscipit iste veniam? Distinctio in similique reprehenderit libero nihil quaerat mollitia odio debitis doloremque sint atque quasi voluptates non at veritatis qui dolorem ut, dolorum nobis rem fugiat sequi. Optio, nam adipisci voluptate accusamus fugiat corrupti doloribus illo laboriosam, dolorum rerum provident obcaecati quae doloremque et dolores sed. Nulla voluptas consequuntur, quia praesentium quos expedita delectus minima suscipit, totam atque asperiores? Iusto ducimus molestiae, quos quidem, quae maxime sapiente cumque quam nostrum magnam consectetur accusantium pariatur dignissimos alias. Corrupti ducimus corporis voluptatibus ipsa dolorem dicta eum fugiat nulla. Possimus quas neque, hic suscipit itaque libero nemo sit facere autem deleniti perspiciatis non dignissimos porro, ipsum nostrum? Sint reiciendis officia nobis. Nulla a et voluptatum tempora repellat veritatis maxime ipsa sunt rem consequuntur nisi enim quo officiis similique sint amet explicabo harum deleniti consectetur assumenda cum, eveniet non. Dicta deserunt odio delectus ab ea culpa numquam? Magni iusto, dolore hic ipsa error accusamus? Ipsa, magnam dignissimos mollitia vitae harum iusto hic obcaecati quaerat iure animi magni velit blanditiis laboriosam nihil voluptate facilis eum temporibus tempore earum est vero corrupti laborum atque natus. Mollitia minima dolore delectus consectetur sint quo illo quam neque laborum illum laboriosam quod fugit harum possimus consequuntur aspernatur distinctio, ipsam quibusdam nostrum quisquam ea incidunt eum esse? Nulla qui odio dolor, officiis dolorem impedit quisquam saepe rerum accusamus ab ipsum quidem ipsa cumque libero ullam aliquam harum? Inventore at itaque molestiae veritatis cupiditate, voluptas rem numquam atque, nobis suscipit consequuntur vero iure, minus qui rerum dolore a harum hic vitae dolor. Itaque repellendus, accusamus fugiat reprehenderit doloribus excepturi consectetur modi natus illum quos, consequuntur eligendi incidunt commodi esse soluta? Blanditiis sed repellendus dolores nemo doloremque unde rerum, asperiores laudantium natus sit facere perspiciatis vero consequatur dolorum numquam iste provident culpa quo. Ducimus placeat nulla rerum maxime veritatis aspernatur iure quisquam, eum magnam voluptatem. Ipsa quod accusantium, ducimus adipisci magni officiis ab esse culpa voluptates obcaecati a veritatis impedit consectetur perspiciatis hic labore cupiditate quae beatae numquam excepturi eaque omnis tempora. Impedit cumque fugit earum nesciunt blanditiis atque quam! Velit molestias tempora amet asperiores illum, eius ipsum laborum ex dolorum id quia voluptatibus perferendis corrupti cum ratione architecto sapiente beatae. Quos, totam. Optio culpa veniam soluta omnis nisi tempore expedita id, ea quo dolorum minima cum consectetur assumenda doloribus fugit nobis, modi esse beatae dicta reprehenderit a quos unde. Consectetur tenetur repudiandae ut laudantium nihil. Eum voluptates atque nihil harum sapiente culpa, aliquid a iure voluptas est consequuntur eligendi aspernatur esse id rerum quibusdam quisquam placeat corrupti ipsum aliquam. Voluptatem mollitia dolorum adipisci facilis quisquam beatae sequi fuga sed, pariatur optio suscipit delectus repudiandae provident vitae corporis laudantium molestiae sit debitis est doloribus iure harum porro! Sed ducimus deserunt asperiores nihil explicabo reprehenderit, iure distinctio quaerat? Necessitatibus neque ullam recusandae blanditiis repellendus vero, placeat sit velit. Libero, in? Id inventore quisquam ullam cumque repellendus officia sint. Optio dolore perferendis dolores a aut. Aperiam, voluptates hic mollitia quidem architecto, odit aliquid veniam nemo sit quis est harum laboriosam ab consequatur dolores quibusdam itaque doloribus quam molestiae atque dolore, enim fugiat animi? Quisquam ad nesciunt cumque quos quidem eaque tempore, delectus aliquam sed adipisci! Asperiores, deleniti natus esse nobis deserunt perferendis sequi, unde illum vitae consequuntur voluptates impedit accusamus nihil officiis aut placeat dolore sed optio fugiat eaque. Dolorum consequuntur, provident aliquam explicabo neque facilis amet ut error eius magnam, maxime adipisci impedit at? Fuga iusto odio repellat ab consequuntur pariatur eos, corrupti tenetur consequatur ad rerum voluptate mollitia nisi libero cumque expedita quis asperiores minima harum modi iste enim earum dolorum! Voluptatum obcaecati culpa, est cum assumenda optio odit inventore, fugit beatae ullam saepe? Possimus architecto aliquid libero error et provident dignissimos, totam odio velit aspernatur aut inventore repellat voluptatum quibusdam? Praesentium, mollitia rem delectus veniam rerum odio similique temporibus iusto aut error possimus dolore reiciendis labore quam dicta nostrum. Fugiat illum, facere eos suscipit tenetur veritatis ipsam cupiditate quaerat iure veniam facilis quo explicabo ab excepturi iste maiores inventore, molestiae quam dolor? In ducimus facilis distinctio sit laborum sunt cumque, similique unde quos provident impedit quas! Pariatur quisquam ab corrupti placeat voluptatem vitae aspernatur dolore. Eum omnis libero assumenda officia cum odit voluptas possimus sapiente quis ducimus maxime reiciendis, cupiditate quaerat iste enim facere soluta. Consequatur tenetur saepe incidunt amet, qui quasi hic perferendis neque ex consectetur dolor facilis repudiandae mollitia odit maxime eius suscipit sed reiciendis quae. Recusandae quis unde minus. Suscipit ex dolores ea ad facere! Qui enim laborum, nam ab atque harum accusantium consectetur accusamus obcaecati alias placeat maxime ipsum ipsam sequi blanditiis impedit cum possimus, totam voluptatibus unde, nemo repudiandae voluptates eius minima. Ipsum, dolorem! Aut, laborum libero. Quae eveniet atque earum ad animi delectus culpa expedita assumenda? Mollitia fugiat maiores distinctio blanditiis odio error aspernatur atque rem exercitationem, maxime corrupti fugit adipisci aliquid hic modi, facilis, nam amet quos! Libero, distinctio, voluptate exercitationem necessitatibus debitis quam qui eaque, nostrum dolorum architecto doloribus amet tempora praesentium. Iusto explicabo, reprehenderit tempora porro commodi delectus? Error odit veritatis, vero iusto unde tenetur atque perferendis? Unde sit fuga eligendi soluta maiores consequuntur inventore repudiandae quia distinctio reprehenderit, laborum autem ducimus quos voluptates! Praesentium fuga aliquid accusamus velit, possimus officia laudantium esse consectetur sequi totam amet ut, expedita odio cumque quas quibusdam sit? Neque molestiae sed voluptatum sunt at, consectetur ex temporibus. Modi placeat suscipit est expedita incidunt excepturi tempore eum rerum alias.
+      <div className="py-5">
+        <div className="max-w-7xl items-center">
+          <div className="greeting ml-[20px]">
+            <h1 className='font-bold text-[40px]'>Selamat Datang <span className='text-mainblue'>{ data.user.name } </span>!</h1>
+            <h3 className='text-[25px]'>Kelola Administrasi Desa Anda .</h3>
+          </div>
+          <div className='content flex flex-column gap-[20px] ml-[70px] mt-[40px]'>
+        <div className='total-residents w-[400px] h-[200px] bg-mainblue rounded-md'>
+        <div className='title-count inline text-putih '>
+            <span className='flex'>
+            <h1 className='font-bold relative ml-[60px] mt-[40px] text-[30px]'>Total Penduduk</h1><TbFriends className='relative ml-[10px] mt-[40px] w-[40px] h-[40px]' />
+            </span>
+        </div>
+        <div className="counts">
+        <h1 className='font-bold text-[50px] text-center text-putih'>{data.resident}</h1>
+        </div>
+        </div>
+        <div className='total-letters w-[400px] h-[200px] bg-mainblue rounded-md'>
+        <div className='title-count inline text-putih '>
+            <span className='flex'>
+            <h1 className='font-bold relative ml-[60px] mt-[40px] text-[30px]'>Total Surat Dibuat</h1><TbFileDescription className='relative ml-[10px] mt-[40px] w-[40px] h-[40px]' />
+            </span>
+        </div>
+        <div className="counts">
+        <h1 className='font-bold text-[50px] text-center text-putih'>{data.letter}</h1>
+        </div>
+        </div>
           </div>
         </div>
       </div>

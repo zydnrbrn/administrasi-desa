@@ -12,8 +12,8 @@ export default function NavLink({
   children,
 }: PropsWithChildren<Props>) {
   const classes = active
-    ? 'inline-flex items-center px-1 pt-1 duration-500 ease-in-out rounded-md font-medium bg-putih mb-[10px] bg-opacity-25 transition'
-    : 'inline-flex items-center px-1 pt-1 duration-500 ease-in-out rounded-md font-medium hover:bg-putih/25 mb-[10px] transition';
+    ? 'inline-flex items-center px-1 pt-1 duration-500 ease-in-out rounded-[10px] font-medium bg-putih mb-[10px] bg-opacity-25 transition'
+    : 'inline-flex items-center px-1 pt-1 duration-500 ease-in-out rounded-[10px] font-medium hover:bg-putih/30 mb-[10px] transition';
 
   return (
     <InertiaLink href={href} className={classes}>

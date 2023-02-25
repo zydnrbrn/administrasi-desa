@@ -24,8 +24,8 @@ export default function Show({
     <AppLayout
       title={'Profile'}
       renderHeader={() => (
-        <h2 className="font-semibold text-xl text-gray-800 leading-tight">
-          Profile
+        <h2 className="font-semibold text-3xl text-gray-800 leading-tight">
+          Pengaturan
         </h2>
       )}
     >
