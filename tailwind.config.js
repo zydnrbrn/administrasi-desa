@@ -17,8 +17,9 @@ module.exports = {
             },
         },
         colors: {
-            'mainblue': '#0038FF',
-            'putih': '#FFFFFF'
+            'mainblue': '#0029BB',
+            'putih': '#FFFFFF',
+            'abu': '#F4F4F4'
         }
     },
 
