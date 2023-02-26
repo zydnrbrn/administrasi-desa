@@ -1,11 +1,11 @@
-import { Inertia } from '@inertiajs/inertia';
-import { Head } from '@inertiajs/inertia-react';
-import React, { PropsWithChildren, useState } from 'react';
-import useRoute from '@/Hooks/useRoute';
-import useTypedPage from '@/Hooks/useTypedPage';
-import Banner from '@/Components/Banner';
+import { Inertia } from '@inertiajs/inertia'
+import { Head } from '@inertiajs/inertia-react'
+import React, { PropsWithChildren, useState } from 'react'
+import useRoute from '@/Hooks/useRoute'
+import useTypedPage from '@/Hooks/useTypedPage'
+import Banner from '@/Components/Banner'
 import { Button, ButtonGroup, IconButton, Box } from '@chakra-ui/react'
-import NavLink from '@/Components/NavLink';
+import NavLink from '@/Components/NavLink'
 import {
     TbLayoutDashboard,
     TbUsers,
@@ -13,8 +13,8 @@ import {
     TbSettings,
     TbDoorEnter } from "react-icons/tb"
 import { FaAlignLeft } from "react-icons/fa"
-import { InertiaLink } from '@inertiajs/inertia-react';
-import ApplicationMark from '@/Components/ApplicationMark';
+import { InertiaLink } from '@inertiajs/inertia-react'
+import ApplicationMark from '@/Components/ApplicationMark'
 interface Props {
   title: string;
   renderHeader?(): JSX.Element;
