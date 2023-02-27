@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('address', function (Blueprint $table) {
 			$table->uuid('id')->primary();
-			$table->uuid('resident_id');
+			$table->uuid('resident_id')->index();
 			$table->unsignedBigInteger('province_id')->nullable();
 			$table->unsignedBigInteger('city_id')->nullable();
 			$table->unsignedBigInteger('district_id')->nullable();
@@ -34,7 +34,7 @@ return new class extends Migration
 		Schema::table('address', function (Blueprint $table) {
             $table->foreign('resident_id')
                     ->references('id')
-                    ->on('address')
+                    ->on('residents')
                     ->onDelete('cascade');
 			$table->foreign('province_id')
 				->references('id')
