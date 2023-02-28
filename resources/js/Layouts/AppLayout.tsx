@@ -4,7 +4,12 @@ import React, { PropsWithChildren, useState } from 'react'
 import useRoute from '@/Hooks/useRoute'
 import useTypedPage from '@/Hooks/useTypedPage'
 import Banner from '@/Components/Banner'
-import { Button, ButtonGroup, IconButton, Box } from '@chakra-ui/react'
+import {
+    Button,
+    ButtonGroup,
+    IconButton,
+    Box,
+ } from '@chakra-ui/react'
 import NavLink from '@/Components/NavLink'
 import {
     TbLayoutDashboard,
@@ -15,6 +20,7 @@ import {
 import { FaAlignLeft } from "react-icons/fa"
 import { InertiaLink } from '@inertiajs/inertia-react'
 import ApplicationMark from '@/Components/ApplicationMark'
+
 interface Props {
   title: string;
   renderHeader?(): JSX.Element;
@@ -28,7 +34,11 @@ export default function AppLayout({
 
   const route = useRoute();
   const data = useTypedPage().props;
-  const [showingSidebar, setShowingSidebar] = useState(false);
+  const [isOpen, setOpen] = useState(false);
+  const toggleSidebar= () => {
+    setOpen(!isOpen);
+  }
+
 
   console.log(data);
 
@@ -43,7 +53,7 @@ export default function AppLayout({
       <Head title={title} />
       <Banner />
       <div className="flex min-h-screen">
-      <Box className='transition-all duration-500 relative ease-in-out min-h-screen p-10 bg-mainblue text-putih rounded-[10px] ml-[10px] my-5' >
+      <Box className={`transition-all duration-500 ease-in-out min-h-screen p-10 bg-mainblue text-putih rounded-[10px] ml-[10px] my-5 ${isOpen ? 'fixed hidden' : ' transition-all ease-in-out duration-200' }`} >
         <div className="flex justify-center ml-[10px]">
         <ApplicationMark/>
          <InertiaLink href={route('dashboard')}>
@@ -76,7 +86,7 @@ export default function AppLayout({
         {renderHeader ? (
           <header className='pt-10'>
             <div className="flex flex-column">
-           <IconButton color={'#0038FF'} className='mx-5 w-[40px] h-[40px]' aria-label="close sidebar" colorScheme='alpha' icon={ <FaAlignLeft className='w-[40px] h-[40px]' />} />
+           <IconButton onClick={toggleSidebar} color={'#0038FF'} className='mx-5 w-[40px] h-[40px]' aria-label="close sidebar" colorScheme='alpha' icon={ <FaAlignLeft className='w-[40px] h-[40px]' />} />
               {renderHeader()}
               </div>
           </header>
