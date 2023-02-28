@@ -1,6 +1,8 @@
 import React from "react"
 import AppLayout from "@/Layouts/AppLayout"
-import { Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react'
+import { Tabs, TabList, TabPanels, Tab, TabPanel, Stack, Button } from '@chakra-ui/react'
+import {
+    TbFileDescription } from "react-icons/tb"
 
 export default function Letter() {
     return(
@@ -29,7 +31,14 @@ export default function Letter() {
                         <TabPanels>
                             <TabPanel>
                             <div className="content-tabs">
-                                <h1>Surat Keterangan Tidak Mampu</h1>
+                            <Stack className="" direction='row' spacing={4}>
+                                <Button className="bg-mainblue" leftIcon={<TbFileDescription />} colorScheme='alpha' variant='solid'>
+                                    SKTM
+                                </Button>
+                                <Button className="bg-mainblue" leftIcon={<TbFileDescription />} colorScheme='alpha' variant='solid'>
+                                    Email
+                                </Button>
+                            </Stack>
                             </div>
                             </TabPanel>
                             <TabPanel>

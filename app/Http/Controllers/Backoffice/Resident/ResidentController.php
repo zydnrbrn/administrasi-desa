@@ -10,7 +10,6 @@ use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
-use Yajra\DataTables\Facades\DataTables;
 
 class ResidentController extends Controller
 {
@@ -21,6 +20,7 @@ class ResidentController extends Controller
             $resident = DB::select($query);
             if($resident) {
                 return Inertia::render('Resident', [
+                    'data'      => $resident,
                     'success'   => 'Berhasil mendapatkan list penduduk .'
                 ]);
             } else {
@@ -113,20 +113,14 @@ class ResidentController extends Controller
             ]);
 
             if($resident) {
-                return Inertia::render('Handler/Succes/Congrat', [
-                    'success'       => 'Berhasil menambahkan penduduk'
-                ]);
+                return redirect()->route('resident')->with('success', 'Berhasil menyimpan data penduduk');
             } else {
-                return Inertia::render('Handler/Error/Failed', [
-                    'failed'        => 'Gagal menambahkan penduduk'
-                ]);
+                return redirect()->route('resident')->with('failed', 'Gagal menyimpan data penduduk');
             }
 
             DB::commit();
         } catch (\Throwable $th) {
-            return Inertia::render('Handler/Error/Error', [
-                'error'             => 'Internal Server Error'
-            ]);
+            return redirect()->route('resident')->with('success', 'Internal Server Error');
         }
 
     }
