@@ -15,7 +15,24 @@ use Illuminate\Support\Facades\Validator;
 class LetterController extends Controller
 {
     public function index() {
-        return Inertia::render('Letter');
+
+        try {
+            $jurnal_sktm =  Sktm::all();
+            $jurnal_skk = Skk::all();
+            $jurnal_spk = Spk::all();
+            $jurnal_skj = Skj::all();
+            return Inertia::render('Letter', [
+                'sktm'  => $jurnal_sktm,
+                'skk'   => $jurnal_skk,
+                'spk'   => $jurnal_spk,
+                'skj'   => $jurnal_skj
+            ]);
+        } catch (\Throwable) {
+            return Inertia::render('Letter', [
+                'error' => 'Internal Server Error'
+            ]);
+        }
+
     }
 
     public function createSKTM (Request $request) {

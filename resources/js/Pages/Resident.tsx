@@ -12,7 +12,7 @@ import {
     TableContainer,
   } from '@chakra-ui/react'
 import useTypedPage from "@/Hooks/useTypedPage"
-import { TbTrash } from "react-icons/tb"
+import { TbSearch } from "react-icons/tb"
 import { Button } from '@chakra-ui/react'
 import { Input, Stack, InputLeftElement, InputGroup } from '@chakra-ui/react'
 
@@ -39,7 +39,7 @@ export default function Resident() {
           <InputGroup>
             <InputLeftElement
             pointerEvents='none'
-            children={<TbTrash color='gray.300' />}
+            children={<TbSearch color='gray.300' />}
             />
             <Input type='tel' placeholder='Cari ...' />
         </InputGroup>
@@ -65,7 +65,7 @@ export default function Resident() {
       </Tr>
     </Thead>
     <Tbody>
-    {/* {data?.map((penduduk) => (
+    {data?.map((penduduk) => (
                <tr>
                <td>{ penduduk.NIK }</td>
                <td>{ penduduk.KK_code }</td>
@@ -85,7 +85,7 @@ export default function Resident() {
                 </Button>
                </td>
            </tr>
-        ))} */}
+        ))}
     </Tbody>
   </Table>
 </TableContainer>
