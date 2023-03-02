@@ -28,6 +28,8 @@ Route::middleware([
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/surat', [LetterController::class, 'index'])->name('letter');
     Route::get('/penduduk', [ResidentController::class, 'index'])->name('resident');
+    Route::post('/create-sktm', [LetterController::class, 'createSktm'])->name('sktm');
+    Route::post('/list-penduduk', [LetterController::class, 'listPenduduk']);
 });
 
 

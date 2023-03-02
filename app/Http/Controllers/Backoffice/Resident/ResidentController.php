@@ -16,24 +16,33 @@ class ResidentController extends Controller
     public function index() {
         try
         {
-            $query = "SELECT * FROM residents";
-            $resident = DB::select($query);
-            if($resident) {
-                return Inertia::render('Resident', [
-                    'data'      => $resident,
-                    'success'   => 'Berhasil mendapatkan list penduduk .'
-                ]);
-            } else {
-                return Inertia::render('Resident', [
-                    'failed'    => 'Gagal mendapatkan list penduduk .'
-                ]);
-            }
+            return Inertia::render('Resident');
         } catch(\Throwable $th) {
-            return Inertia::render('Handler/Failed/Error', [
+            return Inertia::render('Resident', [
                 'errors'        => $th->getMessage()
             ]);
         }
     }
+
+    public function listResident(Request $request) {
+        try
+        {
+            $limit = $request->input('limit');
+            $offset = $request->input('offset');
+            $query = "SELECT * FROM residents ORDER BY name ASC LIMIT ? OFFSET ?";
+            $paginate = DB::select($query, [$limit, $offset]);
+            return redirect()->route('/surat')->with([
+                'status_code'   => 200,
+                'data'          => $paginate
+            ], 200);
+        } catch (\Throwable $th) {
+            return redirect()->route('/error')->with([
+                'status_code'   => 500,
+                'errors'        => 'Internal Server Error'
+            ], 500);
+        }
+    }
+
 
 
     public function store(Request $request) {

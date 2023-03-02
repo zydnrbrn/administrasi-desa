@@ -1,18 +1,70 @@
-import React, { useState, Fragment } from "react"
+import React, { useState } from "react"
 import AppLayout from "@/Layouts/AppLayout"
-import { Tabs, TabList, TabPanels, Tab, TabPanel, Stack, Button } from '@chakra-ui/react'
+import {
+    Tabs,
+    TabList,
+    TabPanels,
+    Tab,
+    TabPanel,
+    Stack,
+    Button,
+    Modal,
+    ModalOverlay,
+    ModalContent,
+    ModalHeader,
+    ModalBody,
+    ModalCloseButton,
+    useDisclosure,
+    NumberInput,
+    NumberInputField,
+    NumberInputStepper,
+    NumberIncrementStepper,
+    NumberDecrementStepper,
+    Input,
+    Radio,
+    RadioGroup,
+    Select } from '@chakra-ui/react'
 import { TbFileDescription } from "react-icons/tb"
-import { Dialog, Transition } from '@headlessui/react'
+import { useForm } from '@inertiajs/inertia-react'
 
 export default function Letter() {
-    const [isOpen, setOpen] = useState(true);
-    function closeModal() {
-        setOpen(false)
-    }
+    const { isOpen, onOpen, onClose } = useDisclosure()
+    const form = useForm({
+        no_surat: "",
+        nama: "",
+        nik: "",
+        ttl: "",
+        gender : "",
+        address: "",
+        status: "",
+        keterangan: "",
+        digunakan: ""
+    })
+    const [values, setValues] = useState({
+        no_surat: "",
+        nama: "",
+        nik: "",
+        ttl: "",
+        gender : "",
+        address: "",
+        status: "",
+        keterangan: "",
+        digunakan: ""
+      })
 
-    function openModal() {
-        setOpen(true)
-    }
+      function handleChange(e) {
+        const key = e.target.id;
+        const value = e.target.value
+        setValues(values => ({
+            ...values,
+            [key]: value,
+        }))
+      }
+
+       function handleSubmit(e) {
+        e.preventDefault()
+        Inertia.post('/create-sktm', values)
+      }
     return(
         <>
         <AppLayout
@@ -29,63 +81,71 @@ export default function Letter() {
             <h3 className='text-[25px]'>Buat atau kelola surat disini .</h3>
           </div>
           <div className='content gap-[20px] ml-[20px] mt-[40px]'>
-        <div className='total-residents w-[1250px] bg-abu rounded-[25px]'>
+        <div className='total-residents w-[900px] bg-abu rounded-[25px]'>
         <div className='inline '>
-        <Transition appear show={isOpen} as={Fragment}>
-        <Dialog as="div" className="relative z-10" onClose={closeModal}>
-          <Transition.Child
-            as={Fragment}
-            enter="ease-out duration-300"
-            enterFrom="opacity-0"
-            enterTo="opacity-100"
-            leave="ease-in duration-200"
-            leaveFrom="opacity-100"
-            leaveTo="opacity-0"
-          >
-            <div className="fixed inset-0 bg-black bg-opacity-25" />
-          </Transition.Child>
 
-          <div className="fixed inset-0 overflow-y-auto">
-            <div className="flex min-h-full items-center justify-center p-4 text-center">
-              <Transition.Child
-                as={Fragment}
-                enter="ease-out duration-300"
-                enterFrom="opacity-0 scale-95"
-                enterTo="opacity-100 scale-100"
-                leave="ease-in duration-200"
-                leaveFrom="opacity-100 scale-100"
-                leaveTo="opacity-0 scale-95"
-              >
-                <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
-                  <Dialog.Title
-                    as="h3"
-                    className="text-lg font-medium leading-6 text-gray-900"
-                  >
-                    Payment successful
-                  </Dialog.Title>
-                  <div className="mt-2">
-                    <p className="text-sm text-gray-500">
-                      Your payment has been successfully submitted. We’ve sent
-                      you an email with all of the details of your order.
-                    </p>
-                  </div>
 
-                  <div className="mt-4">
-                    <button
-                      type="button"
-                      className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                      onClick={closeModal}
-                    >
-                      Got it, thanks!
-                    </button>
-                  </div>
-                </Dialog.Panel>
-              </Transition.Child>
-            </div>
-          </div>
-        </Dialog>
-      </Transition>
-
+      <Modal isOpen={isOpen} onClose={onClose}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Buat Surat Keterangan Tidak Mampu</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+          <form onSubmit={handleSubmit}>
+      <label>Nomor Surat:</label>
+      <NumberInput name="no_surat" onChange={handleChange}>
+  <NumberInputField />
+  <NumberInputStepper>
+    <NumberIncrementStepper />
+    <NumberDecrementStepper />
+  </NumberInputStepper>
+</NumberInput>
+      <label>Nama:</label>
+      <Input name="nama" onChange={handleChange} />
+      <label>NIK:</label>
+      <NumberInput name="nik" onChange={handleChange}>
+  <NumberInputField />
+  <NumberInputStepper>
+    <NumberIncrementStepper />
+    <NumberDecrementStepper />
+  </NumberInputStepper>
+</NumberInput>
+      <label>Tempat Tanggal Lahir:</label>
+      <Input name="ttl" onChange={handleChange}/>
+      <label>Jenis Kelamin:</label>
+      <RadioGroup defaultValue='1'>
+  <Stack spacing={5} direction='row'>
+    <Radio colorScheme='blue' name="gender" value="laki-laki" onChange={handleChange}>
+      Laki-laki
+    </Radio>
+    <Radio colorScheme='blue' name="gender" value="perempuan" onChange={handleChange}>
+      Perempuan
+    </Radio>
+  </Stack>
+</RadioGroup>
+      <label>Alamat:</label>
+      <Input name="address" onChange={handleChange} />
+      <label>Status:</label>
+      <Select name="status">
+        <option value={values.status} onChange={handleChange}>Belum Kawin</option>
+        <option value={values.status} onChange={handleChange}>Kawin</option>
+        <option value={values.status} onChange={handleChange}>Cerai Hidup</option>
+        <option value={values.status} onChange={handleChange}>Cerai Mati</option>
+        </Select>
+      <label>Keterangan:</label>
+     <Input value={values.keterangan} name="keterangan" onChange={handleChange}/>
+      <label>Digunakan Untuk:</label>
+   <Input value={values.digunakan} name="digunakan" onChange={handleChange}/>
+         <Button className="my-5" onClick={onClose} colorScheme='red' variant='solid'>
+            Batal
+            </Button>
+          <Button type="submit" className="bg-mainblue mx-2" colorScheme='alpha' variant='solid'>
+            Simpan
+            </Button>
+            </form>
+          </ModalBody>
+        </ModalContent>
+      </Modal>
             <Tabs variant='soft-rounded' colorScheme='teal'>
                 <TabList>
                     <Tab><h2>Buat Surat</h2></Tab>
@@ -95,11 +155,11 @@ export default function Letter() {
                             <TabPanel>
                             <div className="content-tabs">
                             <Stack className="" direction='row' spacing={4}>
-                                <Button onClick={openModal} className="bg-mainblue" leftIcon={<TbFileDescription />} colorScheme='alpha' variant='solid'>
+                                <Button onClick={onOpen} className="bg-mainblue" leftIcon={<TbFileDescription />} colorScheme='alpha' variant='solid'>
                                     SKTM
                                 </Button>
                                 <Button className="bg-mainblue" leftIcon={<TbFileDescription />} colorScheme='alpha' variant='solid'>
-                                    Email
+                                    SKK
                                 </Button>
                             </Stack>
                             </div>

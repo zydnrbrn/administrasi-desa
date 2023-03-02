@@ -12,7 +12,7 @@ import {
     TableContainer,
   } from '@chakra-ui/react'
 import useTypedPage from "@/Hooks/useTypedPage"
-import { TbSearch } from "react-icons/tb"
+import { TbSearch, TbTrash } from "react-icons/tb"
 import { Button } from '@chakra-ui/react'
 import { Input, Stack, InputLeftElement, InputGroup } from '@chakra-ui/react'
 
@@ -44,12 +44,11 @@ export default function Resident() {
             <Input type='tel' placeholder='Cari ...' />
         </InputGroup>
         </Stack>
-        <div className='total-residents w-[1250px] bg-abu rounded-[25px]'>
+        <div className='total-residents w-[900px] bg-abu rounded-[25px]'>
         <div className='inline'>
-
         <TableContainer>
   <Table className="text-center" variant='striped' colorScheme='teal'>
-    <TableCaption>Data berdasarkan yang di inout oleh admin.</TableCaption>
+    <TableCaption>Data berdasarkan yang di input oleh admin.</TableCaption>
     <Thead>
       <Tr>
         <Th>NIK</Th>

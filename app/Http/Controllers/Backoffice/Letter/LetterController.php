@@ -35,7 +35,7 @@ class LetterController extends Controller
 
     }
 
-    public function createSKTM (Request $request) {
+    public function createSktm (Request $request) {
         try {
             $validator = Validator::make($request->all(), [
                 'no_surat'      => ['required'],
@@ -50,20 +50,20 @@ class LetterController extends Controller
             ]);
 
             if($validator->fails()) {
-                return Inertia::render('Handler/Error/Failed', [
-                    'error'     => $validator->errors()
+                return Inertia::render('Letter', [
+                    'errors'     => $validator->errors()
                 ]);
             }
 
-            $nosurat = $request->no_surat;
-            $nama = $request->nama;
-            $nik = $request->nik;
-            $ttl = $request->ttl;
-            $gender = $request->gender;
-            $address = $request->address;
-            $status = $request->status;
-            $keterangan = $request->keterangan;
-            $digunakan = $request->digunakan;
+            $nosurat = $request->input('no_surat');
+            $nama = $request->input('name');
+            $nik = $request->input('nik');
+            $ttl = $request->input('ttl');
+            $gender = $request->input('gender');
+            $address = $request->input('address');
+            $status = $request->input('status');
+            $keterangan = $request->input('keterangan');
+            $digunakan = $request->input('digunakan');
 
             $sktm = Sktm::create([
                 'no_surat'      => $nosurat,
@@ -78,18 +78,18 @@ class LetterController extends Controller
             ]);
 
             if($sktm) {
-                return Inertia::render('Handler/Success/Congrats', [
-                    'success'   => 'Success create letter'
+                return redirect()->route('/surat')->with([
+                    'success'       => 'Berhasil menambahkan surat'
                 ]);
             } else {
-                return Inertia::render('Handler/Error/Failed', [
-                    'errors'    => 'Failed create letter'
+                return redirect()->route('letter')->with([
+                    'failed'       => 'Gagal menambahkan surat'
                 ]);
             }
 
         } catch(\Throwable $th) {
-            return Inertia::render('Handler/Error/Failed', [
-                'errors'    => $th->getMessage()
+            return redirect()->route('/surat')->with([
+                'errors'        => $th->getMessage()
             ]);
         }
     }
