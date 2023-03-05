@@ -33,14 +33,10 @@ export default function AppLayout({
 }: PropsWithChildren<Props>) {
 
   const route = useRoute();
-  const data = useTypedPage().props;
   const [isOpen, setOpen] = useState(false);
   const toggleSidebar= () => {
     setOpen(!isOpen);
   }
-
-
-  console.log(data);
 
 
   function logout(e: React.FormEvent) {
@@ -53,7 +49,7 @@ export default function AppLayout({
       <Head title={title} />
       <Banner />
       <div className="flex min-h-screen">
-      <Box className={`transition-all duration-500 ease-in-out min-h-screen p-10 bg-mainblue text-putih rounded-[10px] ml-[10px] my-5 ${isOpen ? 'fixed hidden' : ' transition-all ease-in-out duration-200' }`} >
+      <Box className={`transition duration-500 ease-in-out min-h-screen p-10 bg-mainblue text-putih rounded-[10px] ml-[10px] my-5 ${isOpen ? 'absolute left-[-500px] [&>*]:delay-500 [&>*]:duration-500 z-10 ' : ' transition-all ease-in-out duration-200' }`} >
         <div className="flex justify-center ml-[10px]">
         <ApplicationMark/>
          <InertiaLink href={route('dashboard')}>

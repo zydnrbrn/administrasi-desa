@@ -2,12 +2,11 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use App\Models\Sktm;
+use App\Models\Letter;
 use Faker\Factory as Faker;
 
-class SktmSeeder extends Seeder
+class LetterSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -18,9 +17,10 @@ class SktmSeeder extends Seeder
     {
         $faker = Faker::create();
         for ($i = 0; $i < 1000; $i++) {
-            Sktm::create([
+            Letter::create([
                 'no_surat'  => rand(1, 1000),
-                'nik'       => 126,
+                'nik'       => 276,
+                'type'      => 'SKTM',
                 'title'      => $faker->sentence(),
                 'header'      => $faker->sentence(),
                 'content'      => $faker->sentence(),

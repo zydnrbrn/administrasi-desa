@@ -2,10 +2,7 @@
 
 namespace App\Http\Controllers\Backoffice\Letter;
 
-use App\Models\Skj;
-use App\Models\Skk;
-use App\Models\Spk;
-use App\Models\Sktm;
+use App\Models\Letter;
 use Inertia\Inertia;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -15,10 +12,26 @@ use Illuminate\Support\Facades\Validator;
 class LetterController extends Controller
 {
     public function index() {
-        return Inertia::render('Letter');
+
+        try {
+            $surat = Letter::orderBy('created_at', 'asc')->paginate(10);
+            return Inertia::render('Letter/Index', [
+                'surat' => $surat
+            ]);
+        } catch (\Throwable) {
+            return Inertia::render('Letter/Index', [
+                'error' => 'Internal Server Error'
+            ]);
+        }
+
     }
 
-    public function createSKTM (Request $request) {
+
+    public function indexSktm () {
+        return Inertia::render('Letter/CreateSktm');
+    }
+
+    public function storeSktm (Request $request) {
         try {
             $validator = Validator::make($request->all(), [
                 'no_surat'      => ['required'],
@@ -33,22 +46,22 @@ class LetterController extends Controller
             ]);
 
             if($validator->fails()) {
-                return Inertia::render('Handler/Error/Failed', [
-                    'error'     => $validator->errors()
+                return Inertia::render('Letter', [
+                    'errors'     => $validator->errors()
                 ]);
             }
 
-            $nosurat = $request->no_surat;
-            $nama = $request->nama;
-            $nik = $request->nik;
-            $ttl = $request->ttl;
-            $gender = $request->gender;
-            $address = $request->address;
-            $status = $request->status;
-            $keterangan = $request->keterangan;
-            $digunakan = $request->digunakan;
+            $nosurat = $request->input('no_surat');
+            $nama = $request->input('name');
+            $nik = $request->input('nik');
+            $ttl = $request->input('ttl');
+            $gender = $request->input('gender');
+            $address = $request->input('address');
+            $status = $request->input('status');
+            $keterangan = $request->input('keterangan');
+            $digunakan = $request->input('digunakan');
 
-            $sktm = Sktm::create([
+            $sktm = Letter::create([
                 'no_surat'      => $nosurat,
                 'nama'          => $nama,
                 'nik'           => $nik,
@@ -61,24 +74,29 @@ class LetterController extends Controller
             ]);
 
             if($sktm) {
-                return Inertia::render('Handler/Success/Congrats', [
-                    'success'   => 'Success create letter'
+                return redirect()->route('letter')->with([
+                    'success'       => 'Berhasil menambahkan surat'
                 ]);
             } else {
-                return Inertia::render('Handler/Error/Failed', [
-                    'errors'    => 'Failed create letter'
+                return redirect()->route('letter')->with([
+                    'failed'       => 'Gagal menambahkan surat'
                 ]);
             }
 
         } catch(\Throwable $th) {
-            return Inertia::render('Handler/Error/Failed', [
-                'errors'    => $th->getMessage()
+            return redirect()->route('letter')->with([
+                'errors'        => $th->getMessage()
             ]);
         }
     }
 
+    public function indexSkk() {
+        return Inertia::render('Letter/CreateSkk');
+    }
 
-    public function createSKK (Request $request) {
+
+
+    public function storeSKK (Request $request) {
         try {
             $validator = Validator::make($request->all(), [
                 'no_surat'      => ['required'],
@@ -108,7 +126,7 @@ class LetterController extends Controller
             $keterangan = $request->keterangan;
             $digunakan = $request->digunakan;
 
-            $skk = Skk::create([
+            $skk = Letter::create([
                 'no_surat'      => $nosurat,
                 'nama'          => $nama,
                 'nik'           => $nik,
@@ -166,7 +184,7 @@ class LetterController extends Controller
             $keterangan = $request->keterangan;
             $digunakan = $request->digunakan;
 
-            $spk = Spk::create([
+            $spk = Letter::create([
                 'no_surat'      => $nosurat,
                 'nama'          => $nama,
                 'nik'           => $nik,
@@ -224,7 +242,7 @@ class LetterController extends Controller
             $keterangan = $request->keterangan;
             $digunakan = $request->digunakan;
 
-            $skj = Skj::create([
+            $skj = Letter::create([
                 'no_surat'      => $nosurat,
                 'nama'          => $nama,
                 'nik'           => $nik,
@@ -255,7 +273,7 @@ class LetterController extends Controller
 
     public function destroySKTM($id) {
         try {
-            $check_id = Sktm::select("id")->where("id", $id)->doesnExist();
+            $check_id = Letter::select("id")->where("id", $id)->doesnExist();
             if($check_id) {
                 return Inertia::render('Handler/Error/Failed', [
                     'errors'        => 'ID not found'

@@ -3,11 +3,8 @@
 namespace App\Http\Controllers\Backoffice;
 
 use App\Http\Controllers\Controller;
-use App\Models\Skj;
+use App\Models\Letter;
 use App\Models\Resident;
-use App\Models\Skk;
-use App\Models\Sktm;
-use App\Models\Spk;
 use Inertia\Inertia;
 
 class DashboardController extends Controller
@@ -16,11 +13,7 @@ class DashboardController extends Controller
         try
         {
             $resident = Resident::all()->count();
-            $skj = Skj::all()->count();
-            $skk = Skk::all()->count();
-            $sktm = Sktm::all()->count();
-            $spk = Spk::all()->count();
-            $letter = $skj + $skk + $sktm + $spk;
+            $letter = Letter::all()->count();
             return inertia::render('Dashboard', [
                 'resident' => $resident,
                 'letter'   => $letter
