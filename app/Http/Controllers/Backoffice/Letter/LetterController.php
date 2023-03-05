@@ -2,10 +2,7 @@
 
 namespace App\Http\Controllers\Backoffice\Letter;
 
-use App\Models\Skj;
-use App\Models\Skk;
-use App\Models\Spk;
-use App\Models\Sktm;
+use App\Models\Letter;
 use Inertia\Inertia;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -17,25 +14,24 @@ class LetterController extends Controller
     public function index() {
 
         try {
-            $jurnal_sktm =  Sktm::all();
-            $jurnal_skk = Skk::all();
-            $jurnal_spk = Spk::all();
-            $jurnal_skj = Skj::all();
-            return Inertia::render('Letter', [
-                'sktm'  => $jurnal_sktm,
-                'skk'   => $jurnal_skk,
-                'spk'   => $jurnal_spk,
-                'skj'   => $jurnal_skj
+            $surat = Letter::orderBy('created_at', 'asc')->paginate(10);
+            return Inertia::render('Letter/Index', [
+                'surat' => $surat
             ]);
         } catch (\Throwable) {
-            return Inertia::render('Letter', [
+            return Inertia::render('Letter/Index', [
                 'error' => 'Internal Server Error'
             ]);
         }
 
     }
 
-    public function createSktm (Request $request) {
+
+    public function indexSktm () {
+        return Inertia::render('Letter/CreateSktm');
+    }
+
+    public function storeSktm (Request $request) {
         try {
             $validator = Validator::make($request->all(), [
                 'no_surat'      => ['required'],
@@ -65,7 +61,7 @@ class LetterController extends Controller
             $keterangan = $request->input('keterangan');
             $digunakan = $request->input('digunakan');
 
-            $sktm = Sktm::create([
+            $sktm = Letter::create([
                 'no_surat'      => $nosurat,
                 'nama'          => $nama,
                 'nik'           => $nik,
@@ -78,7 +74,7 @@ class LetterController extends Controller
             ]);
 
             if($sktm) {
-                return redirect()->route('/surat')->with([
+                return redirect()->route('letter')->with([
                     'success'       => 'Berhasil menambahkan surat'
                 ]);
             } else {
@@ -88,14 +84,19 @@ class LetterController extends Controller
             }
 
         } catch(\Throwable $th) {
-            return redirect()->route('/surat')->with([
+            return redirect()->route('letter')->with([
                 'errors'        => $th->getMessage()
             ]);
         }
     }
 
+    public function indexSkk() {
+        return Inertia::render('Letter/CreateSkk');
+    }
 
-    public function createSKK (Request $request) {
+
+
+    public function storeSKK (Request $request) {
         try {
             $validator = Validator::make($request->all(), [
                 'no_surat'      => ['required'],
@@ -125,7 +126,7 @@ class LetterController extends Controller
             $keterangan = $request->keterangan;
             $digunakan = $request->digunakan;
 
-            $skk = Skk::create([
+            $skk = Letter::create([
                 'no_surat'      => $nosurat,
                 'nama'          => $nama,
                 'nik'           => $nik,
@@ -183,7 +184,7 @@ class LetterController extends Controller
             $keterangan = $request->keterangan;
             $digunakan = $request->digunakan;
 
-            $spk = Spk::create([
+            $spk = Letter::create([
                 'no_surat'      => $nosurat,
                 'nama'          => $nama,
                 'nik'           => $nik,
@@ -241,7 +242,7 @@ class LetterController extends Controller
             $keterangan = $request->keterangan;
             $digunakan = $request->digunakan;
 
-            $skj = Skj::create([
+            $skj = Letter::create([
                 'no_surat'      => $nosurat,
                 'nama'          => $nama,
                 'nik'           => $nik,
@@ -272,7 +273,7 @@ class LetterController extends Controller
 
     public function destroySKTM($id) {
         try {
-            $check_id = Sktm::select("id")->where("id", $id)->doesnExist();
+            $check_id = Letter::select("id")->where("id", $id)->doesnExist();
             if($check_id) {
                 return Inertia::render('Handler/Error/Failed', [
                     'errors'        => 'ID not found'

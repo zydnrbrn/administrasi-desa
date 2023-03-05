@@ -16,33 +16,31 @@ class ResidentController extends Controller
     public function index() {
         try
         {
-            return Inertia::render('Resident');
+            $query = Resident::query();
+            if (request('search')) {
+                $query->where('name', 'LIKE', '%'.request('search').'%');
+            }
+            $data = DB::table('residents')->orderBy('name', 'asc')->paginate(12);
+            return Inertia::render('Resident/Index', [
+                'residents'          => $data
+            ]);
         } catch(\Throwable $th) {
-            return Inertia::render('Resident', [
+            return Inertia::render('Resident/Index', [
                 'errors'        => $th->getMessage()
             ]);
         }
     }
 
-    public function listResident(Request $request) {
-        try
-        {
-            $limit = $request->input('limit');
-            $offset = $request->input('offset');
-            $query = "SELECT * FROM residents ORDER BY name ASC LIMIT ? OFFSET ?";
-            $paginate = DB::select($query, [$limit, $offset]);
-            return redirect()->route('/surat')->with([
-                'status_code'   => 200,
-                'data'          => $paginate
-            ], 200);
-        } catch (\Throwable $th) {
-            return redirect()->route('/error')->with([
-                'status_code'   => 500,
-                'errors'        => 'Internal Server Error'
-            ], 500);
+
+    public function create() {
+        try {
+            return Inertia::render('Resident/Create');
+        } catch(\Throwable $th) {
+            return redirect()->route('letter')->with([
+                'errors'    => $th->getMessage()
+            ]);
         }
     }
-
 
 
     public function store(Request $request) {
@@ -235,20 +233,19 @@ class ResidentController extends Controller
 
     public function destroy($id) {
         try {
-            $query = "DELETE FROM residents WHERE id = ?";
-        $delete = DB::delete($query, [$id]);
+       $delete = Resident::where('id', $id)->delete();
         if($delete) {
-            return Inertia::render('Handler/Success/Congrat', [
-                'success'       => 'Berhasil menghapus penduduk'
+            return redirect()->route('resident')->with([
+                'success'    => 'Berhasil menghapus penduduk'
             ]);
         } else {
-            return Inertia::render('Handler/Error/Failed', [
-                'failed'        => 'Gagal menghapus penduduk'
+            return redirect()->route('resident')->with([
+                'failed'    => 'Gagal menghapus penduduk'
             ]);
         }
         } catch (\Throwable $th) {
-            return Inertia::render('Handler/Error/Error', [
-                'errors'        => $th->getMessage()
+            return redirect()->route('resident')->with([
+                'errors'    => $th->getMessage()
             ]);
         }
 

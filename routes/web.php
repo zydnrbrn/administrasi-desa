@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Backoffice\DashboardController;
 use App\Http\Controllers\Backoffice\Letter\LetterController;
 use App\Http\Controllers\Backoffice\Resident\ResidentController;
+use App\Models\Resident;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,11 +26,35 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified',
 ])->group(function () {
+
+
+    // ROUTE FOR VIEWS START HERE
+
+
+
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/surat', [LetterController::class, 'index'])->name('letter');
     Route::get('/penduduk', [ResidentController::class, 'index'])->name('resident');
-    Route::post('/create-sktm', [LetterController::class, 'createSktm'])->name('sktm');
-    Route::post('/list-penduduk', [LetterController::class, 'listPenduduk']);
+    Route::get('/buat-sktm', [LetterController::class, 'IndexSktm'])->name('sktm');
+    Route::get('/buat-skk', [LetterController::class, 'IndexSkk'])->name('skk');
+    Route::get('penduduk/tambah-penduduk', [ResidentController::class, 'create'])->name('add-resident');
+
+
+    // END
+
+
+    // ACTION ROUTES START HERE
+
+
+    Route::post('/store-sktm', [LetterController::class, 'storeSktm'])->name('store-sktm');
+    Route::post('/store-skk', [LetterController::class, 'storeSkk'])->name('store-skk');
+    Route::delete('/penduduk/{id}',[ResidentController::class, 'destroy']);
+
+
+
+
+
+    // END
 });
 
 
