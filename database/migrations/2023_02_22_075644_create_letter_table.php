@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('skjs', function (Blueprint $table) {
+        Schema::create('letters', function (Blueprint $table) {
             $table->uuid('id');
             $table->string('no_surat');
             $table->integer('NIK');
@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('header');
             $table->string('content');
             $table->string('footer');
+            $table->string('type');
             $table->timestamps();
 
             $table->foreign('NIK')
@@ -37,6 +38,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('skjs');
+        Schema::dropIfExists('sktms');
     }
 };

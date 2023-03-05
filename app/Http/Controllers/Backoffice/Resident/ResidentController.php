@@ -16,20 +16,28 @@ class ResidentController extends Controller
     public function index() {
         try
         {
-            $query = "SELECT * FROM residents";
-            $resident = DB::select($query);
-            if($resident) {
-                return Inertia::render('Handler/Success/Congrat', [
-                    'success'   => 'Berhasil mendapatkan list penduduk .'
-                ]);
-            } else {
-                return Inertia::render('Handler/Failed/Error', [
-                    'failed'    => 'Gagal mendapatkan list penduduk .'
-                ]);
+            $query = Resident::query();
+            if (request('search')) {
+                $query->where('name', 'LIKE', '%'.request('search').'%');
             }
+            $data = DB::table('residents')->orderBy('name', 'asc')->paginate(12);
+            return Inertia::render('Resident/Index', [
+                'residents'          => $data
+            ]);
         } catch(\Throwable $th) {
-            return Inertia::render('Handler/Failed/Error', [
+            return Inertia::render('Resident/Index', [
                 'errors'        => $th->getMessage()
+            ]);
+        }
+    }
+
+
+    public function create() {
+        try {
+            return Inertia::render('Resident/Create');
+        } catch(\Throwable $th) {
+            return redirect()->route('letter')->with([
+                'errors'    => $th->getMessage()
             ]);
         }
     }
@@ -112,20 +120,14 @@ class ResidentController extends Controller
             ]);
 
             if($resident) {
-                return Inertia::render('Handler/Succes/Congrat', [
-                    'success'       => 'Berhasil menambahkan penduduk'
-                ]);
+                return redirect()->route('resident')->with('success', 'Berhasil menyimpan data penduduk');
             } else {
-                return Inertia::render('Handler/Error/Failed', [
-                    'failed'        => 'Gagal menambahkan penduduk'
-                ]);
+                return redirect()->route('resident')->with('failed', 'Gagal menyimpan data penduduk');
             }
 
             DB::commit();
         } catch (\Throwable $th) {
-            return Inertia::render('Handler/Error/Error', [
-                'error'             => 'Internal Server Error'
-            ]);
+            return redirect()->route('resident')->with('success', 'Internal Server Error');
         }
 
     }
@@ -231,20 +233,19 @@ class ResidentController extends Controller
 
     public function destroy($id) {
         try {
-            $query = "DELETE FROM residents WHERE id = ?";
-        $delete = DB::delete($query, [$id]);
+       $delete = Resident::where('id', $id)->delete();
         if($delete) {
-            return Inertia::render('Handler/Success/Congrat', [
-                'success'       => 'Berhasil menghapus penduduk'
+            return redirect()->route('resident')->with([
+                'success'    => 'Berhasil menghapus penduduk'
             ]);
         } else {
-            return Inertia::render('Handler/Error/Failed', [
-                'failed'        => 'Gagal menghapus penduduk'
+            return redirect()->route('resident')->with([
+                'failed'    => 'Gagal menghapus penduduk'
             ]);
         }
         } catch (\Throwable $th) {
-            return Inertia::render('Handler/Error/Error', [
-                'errors'        => $th->getMessage()
+            return redirect()->route('resident')->with([
+                'errors'    => $th->getMessage()
             ]);
         }
 

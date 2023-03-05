@@ -1,17 +1,25 @@
-import { Inertia } from '@inertiajs/inertia';
-import { InertiaLink, Head } from '@inertiajs/inertia-react';
-import classNames from 'classnames';
-import React, { PropsWithChildren, useState } from 'react';
-import useRoute from '@/Hooks/useRoute';
-import useTypedPage from '@/Hooks/useTypedPage';
-import ApplicationMark from '@/Components/ApplicationMark';
-import Banner from '@/Components/Banner';
-import Dropdown from '@/Components/Dropdown';
-import DropdownLink from '@/Components/DropdownLink';
-import NavLink from '@/Components/NavLink';
-import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
-import { Team } from '@/types';
-import { Link } from '@inertiajs/inertia-react'
+import { Inertia } from '@inertiajs/inertia'
+import { Head } from '@inertiajs/inertia-react'
+import React, { PropsWithChildren, useState } from 'react'
+import useRoute from '@/Hooks/useRoute'
+import useTypedPage from '@/Hooks/useTypedPage'
+import Banner from '@/Components/Banner'
+import {
+    Button,
+    ButtonGroup,
+    IconButton,
+    Box,
+ } from '@chakra-ui/react'
+import NavLink from '@/Components/NavLink'
+import {
+    TbLayoutDashboard,
+    TbUsers,
+    TbFileDescription,
+    TbSettings,
+    TbDoorEnter } from "react-icons/tb"
+import { FaAlignLeft } from "react-icons/fa"
+import { InertiaLink } from '@inertiajs/inertia-react'
+import ApplicationMark from '@/Components/ApplicationMark'
 
 interface Props {
   title: string;
@@ -23,23 +31,13 @@ export default function AppLayout({
   renderHeader,
   children,
 }: PropsWithChildren<Props>) {
-  const page = useTypedPage();
-  const route = useRoute();
-  const [showingNavigationDropdown, setShowingNavigationDropdown] =
-    useState(false);
 
-  function switchToTeam(e: React.FormEvent, team: Team) {
-    e.preventDefault();
-    Inertia.put(
-      route('current-team.update'),
-      {
-        team_id: team.id,
-      },
-      {
-        preserveState: false,
-      },
-    );
+  const route = useRoute();
+  const [isOpen, setOpen] = useState(false);
+  const toggleSidebar= () => {
+    setOpen(!isOpen);
   }
+
 
   function logout(e: React.FormEvent) {
     e.preventDefault();
@@ -49,278 +47,48 @@ export default function AppLayout({
   return (
     <div>
       <Head title={title} />
-
       <Banner />
-
-      <div className="min-h-screen bg-gray-100">
-        <nav className="bg-white">
-          {/* <!-- Primary Navigation Menu --> */}
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex justify-between h-16">
-              <div className="flex">
-                {/* <!-- Logo --> */}
-                <div className="flex-shrink-0 flex items-center">
-                  <InertiaLink href={route('dashboard')}>
-                    <ApplicationMark className="block h-9 w-auto" />
-                  </InertiaLink>
-                </div>
-
-                {/* <!-- Navigation Links --> */}
-                <div className="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                  <NavLink
-                    href={route('dashboard')}
-                    active={route().current('dashboard')}
-                  >
-                    Dashboard
-                  </NavLink>
-                </div>
-              </div>
-
-              <div className="hidden sm:flex sm:items-center sm:ml-6">
-                {/* <!-- Settings Dropdown --> */}
-                <div className="ml-3 relative">
-                  <Dropdown
-                    align="right"
-                    width="48"
-                    renderTrigger={() =>
-                      page.props.jetstream.managesProfilePhotos ? (
-                        <button className="flex text-sm border-2 border-transparent rounded-full focus:outline-none focus:border-gray-300 transition">
-                          <img
-                            className="h-8 w-8 rounded-full object-cover"
-                            src={page.props.user.profile_photo_url}
-                            alt={page.props.user.name}
-                          />
-                        </button>
-                      ) : (
-                        <span className="inline-flex rounded-md">
-                          <button
-                            type="button"
-                            className="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition"
-                          >
-                            {page.props.user.name}
-
-                            <svg
-                              className="ml-2 -mr-0.5 h-4 w-4"
-                              xmlns="http://www.w3.org/2000/svg"
-                              viewBox="0 0 20 20"
-                              fill="currentColor"
-                            >
-                              <path
-                                fillRule="evenodd"
-                                d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                                clipRule="evenodd"
-                              />
-                            </svg>
-                          </button>
-                        </span>
-                      )
-                    }
-                  >
-                    {/* <!-- Account Management --> */}
-                    <div className="block px-4 py-2 text-xs text-gray-400">
-                      Manage Account
-                    </div>
-
-                    <DropdownLink href={route('profile.show')}>
-                      Profile
-                    </DropdownLink>
-
-                    {page.props.jetstream.hasApiFeatures ? (
-                      <DropdownLink href={route('api-tokens.index')}>
-                        API Tokens
-                      </DropdownLink>
-                    ) : null}
-
-                    <div className="border-t border-gray-100"></div>
-
-                    {/* <!-- Authentication --> */}
-                    <form onSubmit={logout}>
-                      <DropdownLink as="button">Log Out</DropdownLink>
-                    </form>
-                  </Dropdown>
-                </div>
-              </div>
-
-              {/* <!-- Hamburger --> */}
-              <div className="-mr-2 flex items-center sm:hidden">
-                <button
-                  onClick={() =>
-                    setShowingNavigationDropdown(!showingNavigationDropdown)
-                  }
-                  className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition"
-                >
-                  <svg
-                    className="h-6 w-6"
-                    stroke="currentColor"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      className={classNames({
-                        hidden: showingNavigationDropdown,
-                        'inline-flex': !showingNavigationDropdown,
-                      })}
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M4 6h16M4 12h16M4 18h16"
-                    />
-                    <path
-                      className={classNames({
-                        hidden: !showingNavigationDropdown,
-                        'inline-flex': showingNavigationDropdown,
-                      })}
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M6 18L18 6M6 6l12 12"
-                    />
-                  </svg>
-                </button>
-              </div>
-            </div>
-          </div>
-
-          {/* <!-- Responsive Navigation Menu --> */}
-          <div
-            className={classNames('sm:hidden', {
-              block: showingNavigationDropdown,
-              hidden: !showingNavigationDropdown,
-            })}
-          >
-            <div className="pt-2 pb-3 space-y-1">
-              <ResponsiveNavLink
-                href={route('dashboard')}
-                active={route().current('dashboard')}
-              >
-                Dashboard
-              </ResponsiveNavLink>
-            </div>
-
-            {/* <!-- Responsive Settings Options --> */}
-            <div className="pt-4 pb-1 border-t border-gray-200">
-              <div className="flex items-center px-4">
-                {page.props.jetstream.managesProfilePhotos ? (
-                  <div className="flex-shrink-0 mr-3">
-                    <img
-                      className="h-10 w-10 rounded-full object-cover"
-                      src={page.props.user.profile_photo_url}
-                      alt={page.props.user.name}
-                    />
-                  </div>
-                ) : null}
-
-                <div>
-                  <div className="font-medium text-base text-gray-800">
-                    {page.props.user.name}
-                  </div>
-                  <div className="font-medium text-sm text-gray-500">
-                    {page.props.user.email}
-                  </div>
-                </div>
-              </div>
-
-              <div className="mt-3 space-y-1">
-                <ResponsiveNavLink
-                  href={route('profile.show')}
-                  active={route().current('profile.show')}
-                >
-                  Profile
-                </ResponsiveNavLink>
-
-                {page.props.jetstream.hasApiFeatures ? (
-                  <ResponsiveNavLink
-                    href={route('api-tokens.index')}
-                    active={route().current('api-tokens.index')}
-                  >
-                    API Tokens
-                  </ResponsiveNavLink>
-                ) : null}
-
-                {/* <!-- Authentication --> */}
-                <form method="POST" onSubmit={logout}>
-                  <ResponsiveNavLink as="button">
-                    Log Out
-                  </ResponsiveNavLink>
-                </form>
-
-                {/* <!-- Team Management --> */}
-                {page.props.jetstream.hasTeamFeatures ? (
-                  <>
-                    <div className="border-t border-gray-200"></div>
-
-                    <div className="block px-4 py-2 text-xs text-gray-400">
-                      Manage Team
-                    </div>
-
-                    {/* <!-- Team Settings --> */}
-                    <ResponsiveNavLink
-                      href={route('teams.show', [
-                        page.props.user.current_team!,
-                      ])}
-                      active={route().current('teams.show')}
-                    >
-                      Team Settings
-                    </ResponsiveNavLink>
-
-                    {page.props.jetstream.canCreateTeams ? (
-                      <ResponsiveNavLink
-                        href={route('teams.create')}
-                        active={route().current('teams.create')}
-                      >
-                        Create New Team
-                      </ResponsiveNavLink>
-                    ) : null}
-
-                    <div className="border-t border-gray-200"></div>
-
-                    {/* <!-- Team Switcher --> */}
-                    <div className="block px-4 py-2 text-xs text-gray-400">
-                      Switch Teams
-                    </div>
-                    {page.props.user?.all_teams?.map(team => (
-                      <form onSubmit={e => switchToTeam(e, team)} key={team.id}>
-                        <ResponsiveNavLink as="button">
-                          <div className="flex items-center">
-                            {team.id == page.props.user.current_team_id && (
-                              <svg
-                                className="mr-2 h-5 w-5 text-green-400"
-                                fill="none"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth="2"
-                                stroke="currentColor"
-                                viewBox="0 0 24 24"
-                              >
-                                <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                              </svg>
-                            )}
-                            <div>{team.name}</div>
-                          </div>
-                        </ResponsiveNavLink>
-                      </form>
-                    ))}
-                  </>
-                ) : null}
-
-              </div>
-            </div>
-          </div>
-        </nav>
-
-        {/* <!-- Page Heading --> */}
+      <div className="flex min-h-screen">
+      <Box className={`transition duration-500 ease-in-out min-h-screen p-10 bg-mainblue text-putih rounded-[10px] ml-[10px] my-5 ${isOpen ? 'absolute left-[-500px] [&>*]:delay-500 [&>*]:duration-500 z-10 ' : ' transition-all ease-in-out duration-200' }`} >
+        <div className="flex justify-center ml-[10px]">
+        <ApplicationMark/>
+         <InertiaLink href={route('dashboard')}>
+        <h1 className='text-center text-[25px] font-bold pl-[5px] pt-5 ml-1'>Desa Bunijaya</h1>
+        </InertiaLink>
+        </div>
+        <div className='flex flex-col mt-10'>
+            <ButtonGroup display='flex' flexDirection={'column'} gap='1'>
+            <NavLink href={route('dashboard')} active={route().current('dashboard')}>
+            <Button colorScheme='Alpha' ><TbLayoutDashboard className='w-[40px] h-[40px] pr-[10px]'/><h1 className='font-bold'>Dashboard</h1></Button>
+            </NavLink>
+            <NavLink href={route('letter')} active={route().current('letter')}>
+            <Button colorScheme='Alpha' ><TbFileDescription className='w-[40px] h-[40px] pr-[10px]'/><h1 className='font-bold'>Surat Menyurat</h1></Button>
+            </NavLink>
+            <NavLink href={route('resident')} active={route().current('resident')}>
+            <Button colorScheme='Alpha' ><TbUsers className='w-[40px] h-[40px] pr-[10px]'/><h1 className='font-bold'>Data Penduduk</h1></Button>
+            </NavLink>
+            <NavLink href={route('profile.show')} active={route().current('profile.show')}>
+            <Button colorScheme='Alpha' ><TbSettings className='w-[40px] h-[40px] pr-[10px]'/><h1 className='font-bold'>Pengaturan</h1></Button>
+            </NavLink>
+            </ButtonGroup>
+        </div>
+        <div className="absolute bottom-10 flex-none">
+        <form onSubmit={logout}>
+            <Button className='w-[200px] transition duration-500 ease-in-out rounded-[10px] font-medium hover:bg-putih/30' type='submit' colorScheme='Alpha' ><TbDoorEnter className='w-[40px] h-[40px] pr-[10px]'/><h1 className='font-bold'>Logout</h1></Button>
+        </form>
+        </div>
+      </Box>
+        <section className='ml-4 overflow-hidden'>
         {renderHeader ? (
-          <header className="bg-white shadow">
-            <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+          <header className='pt-10'>
+            <div className="flex flex-column">
+           <IconButton onClick={toggleSidebar} color={'#0038FF'} className='mx-5 w-[40px] h-[40px]' aria-label="close sidebar" colorScheme='alpha' icon={ <FaAlignLeft className='w-[40px] h-[40px]' />} />
               {renderHeader()}
-            </div>
+              </div>
           </header>
         ) : null}
-
-        {/* <!-- Page Content --> */}
-        <main>
-        <Link href='/surat'>Surat</Link>
-            {children}</main>
+            {children}
+            </section>
       </div>
     </div>
   );

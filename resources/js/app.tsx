@@ -7,6 +7,7 @@ import { createInertiaApp } from '@inertiajs/inertia-react';
 import { InertiaProgress } from '@inertiajs/progress';
 import { RouteContext } from '@/Hooks/useRoute';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
+import { ChakraProvider } from '@chakra-ui/react';
 
 const appName =
   window.document.getElementsByTagName('title')[0]?.innerText || 'Desa';
@@ -22,10 +23,12 @@ createInertiaApp({
     const root = createRoot(el);
     return root.render(
       <RouteContext.Provider value={(window as any).route}>
+        <ChakraProvider>
         <App {...props} />
+        </ChakraProvider>
       </RouteContext.Provider>,
     );
   },
 });
 
-InertiaProgress.init({ color: '#4B5563' });
+InertiaProgress.init({ color: '#0038FF' });
