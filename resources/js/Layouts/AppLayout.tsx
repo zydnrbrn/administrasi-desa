@@ -1,14 +1,15 @@
 import { Inertia } from '@inertiajs/inertia'
 import { Head } from '@inertiajs/inertia-react'
-import React, { PropsWithChildren, useState } from 'react'
+import React, { PropsWithChildren } from 'react'
 import useRoute from '@/Hooks/useRoute'
-import useTypedPage from '@/Hooks/useTypedPage'
 import Banner from '@/Components/Banner'
 import {
     Button,
     ButtonGroup,
     IconButton,
     Box,
+    useDisclosure,
+    Collapse
  } from '@chakra-ui/react'
 import NavLink from '@/Components/NavLink'
 import {
@@ -33,10 +34,10 @@ export default function AppLayout({
 }: PropsWithChildren<Props>) {
 
   const route = useRoute();
-  const [isOpen, setOpen] = useState(false);
-  const toggleSidebar= () => {
-    setOpen(!isOpen);
-  }
+  const {isOpen, onToggle} = useDisclosure();
+//   const toggleSidebar= () => {
+//     setOpen(!isOpen);
+//   }
 
 
   function logout(e: React.FormEvent) {
@@ -49,7 +50,8 @@ export default function AppLayout({
       <Head title={title} />
       <Banner />
       <div className="flex min-h-screen">
-      <Box className={`transition duration-500 ease-in-out min-h-screen p-10 bg-mainblue text-putih rounded-[10px] ml-[10px] my-5 ${isOpen ? 'absolute left-[-500px] [&>*]:delay-500 [&>*]:duration-500 z-10 ' : ' transition-all ease-in-out duration-200' }`} >
+      <Collapse in={isOpen} >
+      <Box className={`min-h-screen p-10 bg-mainblue text-putih rounded-[10px] ml-[10px] my-5 ${isOpen ? ' ' : '' }`} >
         <div className="flex justify-center ml-[10px]">
         <ApplicationMark/>
          <InertiaLink href={route('dashboard')}>
@@ -64,7 +66,7 @@ export default function AppLayout({
             <NavLink href={route('letter')} active={route().current('letter')}>
             <Button colorScheme='Alpha' ><TbFileDescription className='w-[40px] h-[40px] pr-[10px]'/><h1 className='font-bold'>Surat Menyurat</h1></Button>
             </NavLink>
-            <NavLink href={route('resident')} active={route().current('resident')}>
+            <NavLink href={route('penduduk.index')} active={route().current('resident')}>
             <Button colorScheme='Alpha' ><TbUsers className='w-[40px] h-[40px] pr-[10px]'/><h1 className='font-bold'>Data Penduduk</h1></Button>
             </NavLink>
             <NavLink href={route('profile.show')} active={route().current('profile.show')}>
@@ -74,15 +76,16 @@ export default function AppLayout({
         </div>
         <div className="absolute bottom-10 flex-none">
         <form onSubmit={logout}>
-            <Button className='w-[200px] transition duration-500 ease-in-out rounded-[10px] font-medium hover:bg-putih/30' type='submit' colorScheme='Alpha' ><TbDoorEnter className='w-[40px] h-[40px] pr-[10px]'/><h1 className='font-bold'>Logout</h1></Button>
+            <Button className='w-[200px] rounded-[10px] font-medium hover:bg-putih/30' type='submit' colorScheme='Alpha' ><TbDoorEnter className='w-[40px] h-[40px] pr-[10px]'/><h1 className='font-bold'>Logout</h1></Button>
         </form>
         </div>
       </Box>
+      </Collapse>
         <section className='ml-4 overflow-hidden'>
         {renderHeader ? (
           <header className='pt-10'>
             <div className="flex flex-column">
-           <IconButton onClick={toggleSidebar} color={'#0038FF'} className='mx-5 w-[40px] h-[40px]' aria-label="close sidebar" colorScheme='alpha' icon={ <FaAlignLeft className='w-[40px] h-[40px]' />} />
+           <IconButton onClick={onToggle} color={'#0038FF'} className='mx-5 w-[40px] h-[40px]' aria-label="close sidebar" colorScheme='alpha' icon={ <FaAlignLeft className='w-[40px] h-[40px]' />} />
               {renderHeader()}
               </div>
           </header>

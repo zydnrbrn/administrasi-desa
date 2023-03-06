@@ -1,6 +1,5 @@
 import React, { useState } from "react"
 import {
-    Stack,
     Button,
     NumberInput,
     NumberInputField,
@@ -8,8 +7,6 @@ import {
     NumberIncrementStepper,
     NumberDecrementStepper,
     Input,
-    Radio,
-    RadioGroup,
     Select,
     Textarea
  } from '@chakra-ui/react'
@@ -33,7 +30,7 @@ export default function Store() {
     Inertia.post('store-sktm', {
         no_surat: nosurat,
         name: name,
-        nil: nik,
+        nik: nik,
         ttl: ttl,
         gender: gender,
         address: address,
@@ -58,14 +55,14 @@ export default function Store() {
             <h3 className='text-[25px]'>   Harap pastikan data yang dimasukan sudah benar dan sesuai, dikarenakan surat yang sudah dibuat tidak bisa diubah.</h3>
           </div>
           <div className='content gap-[20px] ml-[20px] mt-[40px]'>
-        <div className='total-residents w-[1000px] bg-abu rounded-[25px]'>
+        <div className='total-residents w-[1300px] bg-abu rounded-[25px]'>
         <div className='inline '>
 
 
         <form className="m-[15px]" onSubmit={storeSktm}>
       <label>Nomor Surat:</label>
-      <NumberInput value={nosurat} onChange={(e) => setNomor(e.target.value)} >
-  <NumberInputField />
+      <NumberInput>
+  <NumberInputField value={nosurat} onChange={(e) => setNomor(e.target.value)} />
   <NumberInputStepper>
     <NumberIncrementStepper />
     <NumberDecrementStepper />
@@ -74,8 +71,8 @@ export default function Store() {
       <label>Nama:</label>
       <Input value={name} onChange={(e) => setName(e.target.value)}/>
       <label>NIK:</label>
-      <NumberInput value={nik} onChange={(e) => setNik(e.target.value)}>
-  <NumberInputField />
+      <NumberInput >
+  <NumberInputField  value={nik} onChange={(e) => setNik(e.target.value)}/>
   <NumberInputStepper>
     <NumberIncrementStepper />
     <NumberDecrementStepper />
@@ -84,16 +81,10 @@ export default function Store() {
       <label>Tempat Tanggal Lahir:</label>
       <Input value={ttl} onChange={(e) => setTtl(e.target.value)}/>
       <label>Jenis Kelamin:</label>
-      <RadioGroup defaultValue='1'>
-  <Stack spacing={5} direction='row'>
-    <Radio colorScheme='blue' value={gender} onChange={(e) => setGender(e.target.value)}>
-      Laki-laki
-    </Radio>
-    <Radio colorScheme='blue' value={gender} onChange={(e) => setGender(e.target.value)}>
-      Perempuan
-    </Radio>
-  </Stack>
-</RadioGroup>
+      <Select value={gender} onChange={(e) => setGender(e.target.value)}>
+        <option name='laki-laki'>Laki-laki</option>
+        <option name='perempuan'>Perempuan</option>
+        </Select>
       <label>Alamat:</label>
       <Textarea value={address} onChange={(e) => setAddress(e.target.value)} />
       <label>Status:</label>

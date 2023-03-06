@@ -7,6 +7,7 @@ use Inertia\Inertia;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Models\LetterTemplate;
 use Illuminate\Support\Facades\Validator;
 
 class LetterController extends Controller
@@ -46,8 +47,8 @@ class LetterController extends Controller
             ]);
 
             if($validator->fails()) {
-                return Inertia::render('Letter', [
-                    'errors'     => $validator->errors()
+                return redirect()->route('letter')->with([
+                    'failed'       => $validator->errors()
                 ]);
             }
 
@@ -70,11 +71,12 @@ class LetterController extends Controller
                 'address'       => $address,
                 'status'        => $status,
                 'keterangan'    => $keterangan,
-                'digunakan'     => $digunakan
+                'digunakan'     => $digunakan,
+                'type'          => 'SKTM'
             ]);
 
             if($sktm) {
-                return redirect()->route('letter')->with([
+                return redirect()->back()->with([
                     'success'       => 'Berhasil menambahkan surat'
                 ]);
             } else {
@@ -154,124 +156,70 @@ class LetterController extends Controller
             ]);
         }
     }
-    public function createSPK (Request $request) {
-        try {
-            $validator = Validator::make($request->all(), [
-                'no_surat'      => ['required'],
-                'nama'          => ['required'],
-                'nik'           => ['required'],
-                'ttl'           => ['required'],
-                'gender'        => ['required'],
-                'address'       => ['required'],
-                'status'        => ['required'],
-                'keterangan'    => ['required'],
-                'digunakan'     => ['required']
-            ]);
 
-            if($validator->fails()) {
-                return Inertia::render('Handler/Error/Failed', [
-                    'error'     => $validator->errors()
-                ]);
-            }
 
-            $nosurat = $request->no_surat;
-            $nama = $request->nama;
-            $nik = $request->nik;
-            $ttl = $request->ttl;
-            $gender = $request->gender;
-            $address = $request->address;
-            $status = $request->status;
-            $keterangan = $request->keterangan;
-            $digunakan = $request->digunakan;
-
-            $spk = Letter::create([
-                'no_surat'      => $nosurat,
-                'nama'          => $nama,
-                'nik'           => $nik,
-                'ttl'           => $ttl,
-                'gender'        => $gender,
-                'address'       => $address,
-                'status'        => $status,
-                'keterangan'    => $keterangan,
-                'digunakan'     => $digunakan
-            ]);
-
-            if($spk) {
-                return Inertia::render('Handler/Success/Congrats', [
-                    'success'   => 'Success create letter'
-                ]);
-            } else {
-                return Inertia::render('Handler/Error/Failed', [
-                    'errors'    => 'Failed create letter'
-                ]);
-            }
-
+    public function editTemplateSktm() {
+        try
+        {
+            return Inertia::render('Letter/EditTemplateSktm');
         } catch(\Throwable $th) {
-            return Inertia::render('Handler/Error/Failed', [
-                'errors'    => $th->getMessage()
-            ]);
-        }
-    }
-    public function createSKJ (Request $request) {
-        try {
-            $validator = Validator::make($request->all(), [
-                'no_surat'      => ['required'],
-                'nama'          => ['required'],
-                'nik'           => ['required'],
-                'ttl'           => ['required'],
-                'gender'        => ['required'],
-                'address'       => ['required'],
-                'status'        => ['required'],
-                'keterangan'    => ['required'],
-                'digunakan'     => ['required']
-            ]);
-
-            if($validator->fails()) {
-                return Inertia::render('Handler/Error/Failed', [
-                    'error'     => $validator->errors()
-                ]);
-            }
-
-            $nosurat = $request->no_surat;
-            $nama = $request->nama;
-            $nik = $request->nik;
-            $ttl = $request->ttl;
-            $gender = $request->gender;
-            $address = $request->address;
-            $status = $request->status;
-            $keterangan = $request->keterangan;
-            $digunakan = $request->digunakan;
-
-            $skj = Letter::create([
-                'no_surat'      => $nosurat,
-                'nama'          => $nama,
-                'nik'           => $nik,
-                'ttl'           => $ttl,
-                'gender'        => $gender,
-                'address'       => $address,
-                'status'        => $status,
-                'keterangan'    => $keterangan,
-                'digunakan'     => $digunakan
-            ]);
-
-            if($skj) {
-                return Inertia::render('Handler/Success/Congrats', [
-                    'success'   => 'Success create letter'
-                ]);
-            } else {
-                return Inertia::render('Handler/Error/Failed', [
-                    'errors'    => 'Failed create letter'
-                ]);
-            }
-
-        } catch(\Throwable $th) {
-            return Inertia::render('Handler/Error/Failed', [
+            return Inertia::render('Letter/EditTemplateSktm', [
                 'errors'    => $th->getMessage()
             ]);
         }
     }
 
-    public function destroySKTM($id) {
+
+    public function storeTemplateSktm(Request $request) {
+        try {
+            $validator = Validator::make($request->all(), [
+                'name'          => ['required'],
+                'title'           => ['required'],
+                'header'           => ['required'],
+                'content'        => ['required'],
+                'footer'       => ['required'],
+            ]);
+
+            if($validator->fails()) {
+                return redirect()->route('template-sktm')->with([
+                    'error'     => $validator->errors()
+                ], 400);
+            }
+
+            $name = $request->name;
+            $title = $request->title;
+            $header = $request->header;
+            $content = $request->content;
+            $footer = $request->footer;
+
+            $template = LetterTemplate::crete([
+                'name'          => $name,
+                'type'          => 'SKTM',
+                'title'           => $title,
+                'header'           => $header,
+                'content'        => $content,
+                'footer'       => $footer,
+            ]);
+
+            if($template) {
+                return response()->json([
+                    'success'     => 'Berhasil menambahkan template sktm'
+                ], 200);
+            } else {
+                return response()->json([
+                    'failed'     => 'Gagal menambahkan template sktm'
+                ], 400);
+            }
+
+
+        } catch(\Throwable $th) {
+            return redirect()->route('template-sktm')->with([
+                'errors'     => $th->getMessage()
+            ], 500);
+        }
+    }
+
+    public function destroy($id) {
         try {
             $check_id = Letter::select("id")->where("id", $id)->doesnExist();
             if($check_id) {
@@ -293,7 +241,9 @@ class LetterController extends Controller
                 }
             }
         } catch (\Throwable $th) {
-
+            return redirect()->route('letter')->with([
+                'errors'    => $th->getMessage()
+            ]);
         }
     }
 }

@@ -25,6 +25,7 @@ return new class extends Migration
             $table->string('job');
             $table->string('citizenship');
             $table->string('valid_until');
+            $table->string('blood_type');
             $table->timestamps();
         });
     }

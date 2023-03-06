@@ -23,6 +23,6 @@ class Resident extends Model
 
     public function user(): HasMany
     {
-        return $this->hasMany(Address::class, 'address_id', 'id');
+        return $this->hasMany(Address::class, 'resident_id', 'id');
     }
 }

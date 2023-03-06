@@ -10,6 +10,9 @@ class Letter extends Model
 {
     use HasFactory;
 
+    protected $table = 'letters';
+    protected $guarded = [];
+
     public static function boot()
     {
         parent::boot();

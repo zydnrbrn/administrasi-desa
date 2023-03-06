@@ -29,7 +29,8 @@ class ResidentSeeder extends Seeder
             'marital_status'    => 'KAWIN',
             'job'       => $faker->word(),
             'citizenship'   => $faker->state(),
-            'valid_until'   => $faker->date()
+            'valid_until'   => $faker->date(),
+            'blood_type'    => 'A+'
         ]);
     }
     }

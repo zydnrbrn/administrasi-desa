@@ -22,9 +22,7 @@ return new class extends Migration
 			$table->string('village', 100);
 			$table->char('RT', 4)->nullable();
 			$table->char('RW', 4)->nullable();
-			$table->text('address_detail')->nullable();
-			$table->integer('created_at');
-			$table->integer('updated_at');
+			$table->timestamps();
 		});
 
 		Schema::table('address', function (Blueprint $table) {
