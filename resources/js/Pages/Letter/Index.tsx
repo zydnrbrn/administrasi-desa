@@ -37,6 +37,7 @@ export default function Letter(props) {
                 <TabList>
                     <Tab><h2>Jurnal Surat</h2></Tab>
                     <Tab><h2>Buat Surat</h2></Tab>
+                    <Tab><h2>Pengaturan Surat</h2></Tab>
                 </TabList>
                         <TabPanels>
                             <TabPanel>
@@ -52,13 +53,30 @@ export default function Letter(props) {
                             <div className="content-tabs">
                             <Stack className="" direction='row' spacing={4}>
                                 <InertiaLink href={route('sktm')}>
-                                <Button className="bg-mainblue" leftIcon={<TbFileDescription />} colorScheme='alpha' variant='solid'>
+                                <Button className="bg-mainblue w-[120px]" leftIcon={<TbFileDescription />} colorScheme='alpha' variant='solid'>
                                     SKTM
                                 </Button>
                                 </InertiaLink>
                                 <InertiaLink href={route('skk')}>
-                                <Button className="bg-mainblue" leftIcon={<TbFileDescription />} colorScheme='alpha' variant='solid'>
+                                <Button className="bg-mainblue w-[120px]" leftIcon={<TbFileDescription />} colorScheme='alpha' variant='solid'>
                                     SKK
+                                </Button>
+                                </InertiaLink>
+                            </Stack>
+                            </div>
+                            </TabPanel>
+                            <TabPanel>
+
+                            <div className="content-tabs">
+                            <Stack className="" direction='row' spacing={4}>
+                                <InertiaLink href={route('template-sktm')}>
+                                <Button className="bg-mainblue w-[220px]" leftIcon={<TbFileDescription />} colorScheme='alpha' variant='solid'>
+                                    Edit Template SKTM
+                                </Button>
+                                </InertiaLink>
+                                <InertiaLink href={route('sktm')}>
+                                <Button className="bg-mainblue w-[220px]" leftIcon={<TbFileDescription />} colorScheme='alpha' variant='solid'>
+                                    Edit Template SKK
                                 </Button>
                                 </InertiaLink>
                             </Stack>
