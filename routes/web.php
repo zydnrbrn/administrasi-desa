@@ -1,10 +1,9 @@
 <?php
 
+use Inertia\Inertia;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Backoffice\DashboardController;
 use App\Http\Controllers\Backoffice\Letter\LetterController;
-use App\Http\Controllers\Backoffice\Resident\ResidentController;
-use App\Models\Resident;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,6 +37,7 @@ Route::middleware([
     Route::get('/buat-sktm', [LetterController::class, 'IndexSktm'])->name('sktm');
     Route::get('/buat-skk', [LetterController::class, 'IndexSkk'])->name('skk');
     Route::get('/edit-template-sktm', [LetterController::class, 'editTemplateSktm'])->name('template-sktm');
+    Route::get('/sktm', [LetterController::class, 'Sktm']);
 
 
     // END
@@ -56,6 +56,12 @@ Route::middleware([
 
     // END
 });
+
+
+// Route Handler
+Route::get('/errors', function () {
+    return Inertia::render('Handler/Error/Error');
+})->name('errors');
 
 
 // Route::group(function () {

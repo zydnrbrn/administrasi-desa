@@ -5,12 +5,13 @@ namespace App\Models;
 use Webpatser\Uuid\Uuid;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Resident extends Model
 {
     protected $table = 'residents';
     protected $guarded = [];
+    protected $keyType = 'string';
     use HasFactory;
 
     public static function boot()
@@ -21,8 +22,8 @@ class Resident extends Model
         });
     }
 
-    public function user(): HasMany
+    public function address(): BelongsTo
     {
-        return $this->hasMany(Address::class, 'resident_id', 'id');
+        return $this->belongsTo(Address::class);
     }
 }
