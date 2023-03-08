@@ -5,9 +5,11 @@ import { Input, Button, InputLeftElement, InputGroup } from '@chakra-ui/react'
 import Tables from "@/Components/DataTable"
 import Paginator from "@/Components/Paginator"
 import { InertiaLink } from "@inertiajs/inertia-react"
+import useRoute from "@/Hooks/useRoute"
 
 
 export default function Resident(props) {
+    const route = useRoute()
     return(
         <>
         <AppLayout
@@ -30,13 +32,13 @@ export default function Resident(props) {
             />
             <Input type='tel' placeholder='Cari ...' />
         </InputGroup>
-        <InertiaLink href={route('add-resident')}>
+        <InertiaLink href={route('penduduk.create')}>
         <Button leftIcon={<TbFriends />} colorScheme="alpha" className="bg-mainblue ml-[20px]">Tambah Penduduk</Button>
         </InertiaLink>
         </div>
           </div>
           <div className='content gap-[20px] ml-[20px] mt-[40px]'>
-        <div className='total-residents w-[1300px] bg-abu rounded-[25px]'>
+        <div className='total-residents bg-abu rounded-[25px]'>
         <div className='inline'>
         <Tables residents={props.residents.data} />
         <div className="flex p-[20px]">

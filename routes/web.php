@@ -34,10 +34,10 @@ Route::middleware([
 
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/surat', [LetterController::class, 'index'])->name('letter');
-    Route::get('/penduduk', [ResidentController::class, 'index'])->name('resident');
+    Route::resource('/penduduk', \App\Http\Controllers\Backoffice\Resident\ResidentController::class);
     Route::get('/buat-sktm', [LetterController::class, 'IndexSktm'])->name('sktm');
     Route::get('/buat-skk', [LetterController::class, 'IndexSkk'])->name('skk');
-    Route::get('penduduk/tambah-penduduk', [ResidentController::class, 'create'])->name('add-resident');
+    Route::get('/edit-template-sktm', [LetterController::class, 'editTemplateSktm'])->name('template-sktm');
 
 
     // END
@@ -48,7 +48,7 @@ Route::middleware([
 
     Route::post('/store-sktm', [LetterController::class, 'storeSktm'])->name('store-sktm');
     Route::post('/store-skk', [LetterController::class, 'storeSkk'])->name('store-skk');
-    Route::delete('/penduduk/{id}',[ResidentController::class, 'destroy']);
+    Route::post('/create-template-sktm', [LetterController::class, 'storeTemplateSktm'])->name('store-template-sktm');
 
 
 

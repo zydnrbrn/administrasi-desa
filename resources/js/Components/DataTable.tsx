@@ -28,6 +28,7 @@ const Tables = ({ residents }) => {
         <Th>Tempat Tangal Lahir</Th>
         <Th>Jenis Kelamin</Th>
         <Th>Status</Th>
+        <Th>Golongan Darah</Th>
         <Th>religion</Th>
         <Th>kewarganegaraan</Th>
         <Th>Berlaku sampai</Th>
@@ -43,6 +44,7 @@ const Tables = ({ residents }) => {
                <td>{ penduduk.date_place_birth }</td>
                <td>{ penduduk.gender }</td>
                <td>{ penduduk.marital_status }</td>
+               <td>{ penduduk.blood_type }</td>
                <td>{ penduduk.religion }</td>
                <td>{ penduduk.citizenship }</td>
                <td>{ penduduk.valid_until }</td>
