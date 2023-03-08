@@ -66,7 +66,7 @@ export default function AppLayout({
             <NavLink href={route('letter')} active={route().current('letter')}>
             <Button colorScheme='Alpha' ><TbFileDescription className='w-[40px] h-[40px] pr-[10px]'/><h1 className='font-bold'>Surat Menyurat</h1></Button>
             </NavLink>
-            <NavLink href={route('penduduk.index')} active={route().current('resident')}>
+            <NavLink href={route('penduduk.index')} active={route().current('penduduk.index')}>
             <Button colorScheme='Alpha' ><TbUsers className='w-[40px] h-[40px] pr-[10px]'/><h1 className='font-bold'>Data Penduduk</h1></Button>
             </NavLink>
             <NavLink href={route('profile.show')} active={route().current('profile.show')}>

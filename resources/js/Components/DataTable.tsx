@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Fragment, useState } from 'react'
 import {
     Button,
     Table,
@@ -7,17 +7,35 @@ import {
     Tr,
     Th,
     TableContainer,
+    Modal,
+    ModalOverlay,
+    ModalContent,
+    ModalHeader,
+    ModalFooter,
+    ModalBody,
+    ModalCloseButton,
   } from '@chakra-ui/react'
   import { TbTrash, TbEdit } from 'react-icons/tb'
   import { Inertia } from '@inertiajs/inertia'
+  import { InertiaLink } from '@inertiajs/inertia-react'
 
 const Tables = ({ residents }) => {
+    console.log(residents)
+    let [isOpen, setOpen] = useState(false)
+    function closeModal()  {
+        setOpen(false)
+    }
+
+    function openModal() {
+        setOpen(true)
+    }
     // delete resident
     const deleteResident = async (id) => {
-        Inertia.delete(`/penduduk/${ id }`)
+        Inertia.delete(`penduduk/${id}`)
     }
     return(
         <>
+
     <TableContainer>
   <Table className="mx-1 mr-[60px]" variant='striped' >
     <Thead>
@@ -49,18 +67,41 @@ const Tables = ({ residents }) => {
                <td>{ penduduk.citizenship }</td>
                <td>{ penduduk.valid_until }</td>
                <td>
+                <InertiaLink href={`/penduduk/${penduduk.id}/edit`}>
                 <Button className='bg-mainblue' leftIcon={<TbEdit />} colorScheme='alpha' variant='solid'>
                     Edit
                 </Button>
-                <Button onClick={() => deleteResident(residents.id)} className='mx-3' leftIcon={<TbTrash />} colorScheme='red' variant='solid'>
+                </InertiaLink>
+                <Button onClick={openModal} className='mx-3' leftIcon={<TbTrash />} colorScheme='red' variant='solid'>
                     Hapus
                 </Button>
+                <Modal
+              isOpen={isOpen}
+              onClose={closeModal}
+            >
+              <ModalOverlay />
+              <ModalContent>
+                <ModalHeader>Yakin menghapus data penduduk ?</ModalHeader>
+                <ModalCloseButton />
+                <ModalFooter>
+                       <Button onClick={() => deleteResident(penduduk.id)} className='mx-3' leftIcon={<TbTrash />} colorScheme='red' variant='solid'>
+                          Hapus
+                      </Button>
+                  <Button onClick={closeModal}>Cancel</Button>
+                </ModalFooter>
+              </ModalContent>
+            </Modal>
                </td>
            </tr>
         ))}
     </Tbody>
   </Table>
 </TableContainer>
+<div>
+                <>
+
+            </>
+            </div>
         </>
     )
 }

@@ -28,8 +28,8 @@ class LetterController extends Controller
     }
 
 
-    public function indexSktm () {
-        return Inertia::render('Letter/CreateSktm');
+    public function Sktm() {
+        return Inertia::render('Letter/Template/Sktm');
     }
 
     public function storeSktm (Request $request) {
@@ -98,64 +98,6 @@ class LetterController extends Controller
 
 
 
-    public function storeSKK (Request $request) {
-        try {
-            $validator = Validator::make($request->all(), [
-                'no_surat'      => ['required'],
-                'nama'          => ['required'],
-                'nik'           => ['required'],
-                'ttl'           => ['required'],
-                'gender'        => ['required'],
-                'address'       => ['required'],
-                'status'        => ['required'],
-                'keterangan'    => ['required'],
-                'digunakan'     => ['required']
-            ]);
-
-            if($validator->fails()) {
-                return Inertia::render('Handler/Error/Failed', [
-                    'error'     => $validator->errors()
-                ]);
-            }
-
-            $nosurat = $request->no_surat;
-            $nama = $request->nama;
-            $nik = $request->nik;
-            $ttl = $request->ttl;
-            $gender = $request->gender;
-            $address = $request->address;
-            $status = $request->status;
-            $keterangan = $request->keterangan;
-            $digunakan = $request->digunakan;
-
-            $skk = Letter::create([
-                'no_surat'      => $nosurat,
-                'nama'          => $nama,
-                'nik'           => $nik,
-                'ttl'           => $ttl,
-                'gender'        => $gender,
-                'address'       => $address,
-                'status'        => $status,
-                'keterangan'    => $keterangan,
-                'digunakan'     => $digunakan
-            ]);
-
-            if($skk) {
-                return Inertia::render('Handler/Success/Congrats', [
-                    'success'   => 'Success create letter'
-                ]);
-            } else {
-                return Inertia::render('Handler/Error/Failed', [
-                    'errors'    => 'Failed create letter'
-                ]);
-            }
-
-        } catch(\Throwable $th) {
-            return Inertia::render('Handler/Error/Failed', [
-                'errors'    => $th->getMessage()
-            ]);
-        }
-    }
 
 
     public function editTemplateSktm() {

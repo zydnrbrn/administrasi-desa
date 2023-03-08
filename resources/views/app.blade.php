@@ -8,6 +8,7 @@
 
     <!-- Fonts -->
     <link rel="stylesheet" href="https://fonts.bunny.net/css2?family=Nunito:wght@400;600;700&display=swap">
+    <link rel="icon" href={{ url('https://ik.imagekit.io/3upgjbxqx/administrasi-desa/desa-bunijaya/LOGO.png?ik-sdk-version=javascript-1.4.3&updatedAt=1676075233421') }}>
 
     <!-- Scripts -->
     @routes
