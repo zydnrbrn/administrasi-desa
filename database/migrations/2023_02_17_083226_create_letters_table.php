@@ -14,16 +14,16 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('letter_templates', function (Blueprint $table) {
-            $table->uuid('id');
-            $table->string('name');
-            $table->string('type');
-            $table->string('title');
-            $table->string('header');
-            $table->string('content');
-            $table->string('footer');
-            $table->timestamps();
-        });
+        // Schema::create('letter_templates', function (Blueprint $table) {
+        //     $table->uuid('id');
+        //     $table->string('name');
+        //     $table->string('type');
+        //     $table->string('title');
+        //     $table->string('header');
+        //     $table->string('content');
+        //     $table->string('footer');
+        //     $table->timestamps();
+        // });
     }
 
     /**
@@ -33,6 +33,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('letters');
+        // Schema::dropIfExists('letters');
     }
 };

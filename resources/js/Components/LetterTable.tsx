@@ -8,14 +8,24 @@ import {
     Th,
     TableContainer,
   } from '@chakra-ui/react'
-  import { TbTrash } from 'react-icons/tb'
+  import { TbTrash, TbEye } from 'react-icons/tb'
   import { Inertia } from '@inertiajs/inertia'
+  import useRoute from '@/Hooks/useRoute'
+  import { InertiaLink } from '@inertiajs/inertia-react'
+
+
 
 const LetterTables = ({ data }) => {
+    const route = useRoute()
+    console.log(data)
     // delete resident
-    // const deleteResident = async (id) => {
-    //     Inertia.delete(`/penduduk/${ id }`)
-    // }
+    const showLetter = async (id) => {
+        Inertia.get(`/surat/${ id }`)
+    }
+
+    const deleteLetter = async (id) => {
+        Inertia.delete(`/surat/${ id }`)
+    }
     return(
         <>
     <TableContainer>
@@ -24,9 +34,9 @@ const LetterTables = ({ data }) => {
       <Tr>
         <Th>No Surat</Th>
         <Th>NIK Tujuan</Th>
-        <Th>Judul</Th>
+        <Th>Tujuan Dibuat</Th>
         <Th>Dibuat PADA</Th>
-        <Th>Hapus</Th>
+        <Th>Opsi</Th>
       </Tr>
     </Thead>
     <Tbody>
@@ -34,11 +44,14 @@ const LetterTables = ({ data }) => {
                <tr key={index}>
                <td>{ surat.no_surat }</td>
                <td>{ surat.NIK }</td>
-               <td>{ surat.title }</td>
+               <td>{ surat.objective }</td>
                <td>{ surat.created_at }</td>
                <td>
-                <Button  className='mx-3' leftIcon={<TbTrash />} colorScheme='red' variant='solid'>
-                    Hapus
+                <Button onClick={() => showLetter(surat.id)} className='mx-3' colorScheme='alpha' >
+                <TbEye style={{ color: '#0029BB' }} />
+                </Button>
+                <Button onClick={() => deleteLetter(surat.id)} className='mx-3' colorScheme='alpha' >
+                <TbTrash style={{ color: 'red' }} />
                 </Button>
                </td>
            </tr>

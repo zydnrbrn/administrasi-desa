@@ -19,12 +19,9 @@ class LetterSeeder extends Seeder
         for ($i = 0; $i < 1000; $i++) {
             Letter::create([
                 'no_surat'  => rand(1, 1000),
-                'nik'       => 1,
-                'type'      => 'SKTM',
-                'title'      => $faker->sentence(),
-                'header'      => $faker->sentence(),
-                'content'      => $faker->sentence(),
-                'footer'      => $faker->sentence(),
+                'nik'       => 1441,
+                // 'type'      => 'SKTM',
+                'objective'      => $faker->sentence(),
             ]);
         }
 

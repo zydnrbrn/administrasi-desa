@@ -245,11 +245,11 @@ class ResidentController extends Controller
        $penduduk->delete();
         if($penduduk) {
             return redirect()->route('penduduk.index')->with([
-                'success'    => 'Berhasil menghapus penduduk'
+                'residents'    => 'Berhasil menghapus penduduk !'
             ]);
         } else {
             return redirect()->route('penduduk.index')->with([
-                'failed'    => 'Gagal menghapus penduduk'
+                'residents'    => 'Gagal menghapus penduduk !'
             ]);
         }
         } catch (\Throwable $th) {

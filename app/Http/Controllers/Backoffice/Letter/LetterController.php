@@ -15,13 +15,13 @@ class LetterController extends Controller
     public function index() {
 
         try {
-            $surat = Letter::orderBy('created_at', 'asc')->paginate(10);
+            $data = DB::table('letters')->orderBy('NIK', 'asc')->paginate(10);
             return Inertia::render('Letter/Index', [
-                'surat' => $surat
+                'surat' => $data
             ]);
-        } catch (\Throwable) {
+        } catch (\Throwable $th) {
             return Inertia::render('Letter/Index', [
-                'error' => 'Internal Server Error'
+                'errors' => $th->getMessage()
             ]);
         }
 
@@ -32,69 +32,72 @@ class LetterController extends Controller
         return Inertia::render('Letter/Template/Sktm');
     }
 
-    public function storeSktm (Request $request) {
+
+    public function show(Letter $surat) {
         try {
-            $validator = Validator::make($request->all(), [
-                'no_surat'      => ['required'],
-                'nama'          => ['required'],
-                'nik'           => ['required'],
-                'ttl'           => ['required'],
-                'gender'        => ['required'],
-                'address'       => ['required'],
-                'status'        => ['required'],
-                'keterangan'    => ['required'],
-                'digunakan'     => ['required']
-            ]);
-
-            if($validator->fails()) {
-                return redirect()->route('letter')->with([
-                    'failed'       => $validator->errors()
-                ]);
-            }
-
-            $nosurat = $request->input('no_surat');
-            $nama = $request->input('name');
-            $nik = $request->input('nik');
-            $ttl = $request->input('ttl');
-            $gender = $request->input('gender');
-            $address = $request->input('address');
-            $status = $request->input('status');
-            $keterangan = $request->input('keterangan');
-            $digunakan = $request->input('digunakan');
-
-            $sktm = Letter::create([
-                'no_surat'      => $nosurat,
-                'nama'          => $nama,
-                'nik'           => $nik,
-                'ttl'           => $ttl,
-                'gender'        => $gender,
-                'address'       => $address,
-                'status'        => $status,
-                'keterangan'    => $keterangan,
-                'digunakan'     => $digunakan,
-                'type'          => 'SKTM'
-            ]);
-
-            if($sktm) {
-                return redirect()->back()->with([
-                    'success'       => 'Berhasil menambahkan surat'
+              $data = DB::table('letters')->join('residents', 'letters.NIK', '=', 'residents.NIK')->where('letters.id', $surat->id)->get();
+            if($data) {
+                return Inertia::render('Letter/Sktm', [
+                    'data'  => $data
                 ]);
             } else {
-                return redirect()->route('letter')->with([
-                    'failed'       => 'Gagal menambahkan surat'
+                return Inertia::render('Letter/Index', [
+                    'errors'    => 'Gagal mendapatkan data surat'
                 ]);
             }
-
         } catch(\Throwable $th) {
-            return redirect()->route('letter')->with([
-                'errors'        => $th->getMessage()
+            return Inertia::render('Letter/Sktm', [
+                'errors'    => $th->getMessage()
             ]);
         }
     }
 
-    public function indexSkk() {
-        return Inertia::render('Letter/CreateSkk');
+    public function store(Request $request) {
+        try {
+            $validator = Validator::make($request->all(), [
+                'no_surat'      => ['required'],
+                'nik'           => ['required'],
+                'objective'     => ['required']
+            ]);
+
+            if($validator->fails()) {
+                return Inertia::render('Letter/CreateSktm', [
+                    'errors'    => $validator->errors()
+                ]);
+            }
+
+            $nik = $request->nik;
+            $no_surat = $request->no_surat;
+            $object = $request->objective;
+
+            $sktm = Letter::create([
+                'NIK'           => $nik,
+                'no_surat'      => $no_surat,
+                'objective'     => $object,
+                'type'          => 'SKTM'
+            ]);
+
+            if($sktm) {
+                return redirect()->route('surat.index')->with([
+                    'success'       => 'Berhasil menambahkan surat'
+                ], 200);
+            } else {
+                return redirect()->route('surat.index')->with([
+                    'errors'       => 'Gagal menambahkan surat'
+                ], 400);
+            }
+
+        } catch(\Throwable $th) {
+            return redirect()->route('surat.create')->with([
+
+            ], 500);
+        }
     }
+
+    public function create() {
+        return Inertia::render('Letter/CreateSktm');
+    }
+
 
 
 
@@ -161,29 +164,25 @@ class LetterController extends Controller
         }
     }
 
-    public function destroy($id) {
+    public function destroy(Letter $surat) {
         try {
-            $check_id = Letter::select("id")->where("id", $id)->doesnExist();
-            if($check_id) {
-                return Inertia::render('Handler/Error/Failed', [
-                    'errors'        => 'ID not found'
-                ]);
-
-                $query = "DELETE FROM sktms WHERE id = ? ";
-                $delete = DB::select($query, [$id]);
-
-                if($delete) {
-                    return Inertia::render('/Handler/Success/Congrats', [
-                        'success'   => 'Success Delete Letter'
+            // $check_id = Letter::select("id")->where("id", $surat)->doesnExist();
+            // if($check_id) {
+            //     return redirect()->route('surat.index')->with([
+            //         'errors'    => 'ID not found'
+            //     ]);
+              $surat->delete();
+                if($surat) {
+                    return redirect()->route('surat.index')->with([
+                        'success'    => 'Berhasil menghapus data'
                     ]);
                 } else {
-                    return Inertia::render('Handler/Error/Failed', [
-                        'errors'    => 'Failed Delete Letter'
+                    return redirect()->route('surat.index')->with([
+                        'errors'    => 'Gagal menghapus data'
                     ]);
-                }
             }
         } catch (\Throwable $th) {
-            return redirect()->route('letter')->with([
+            return Inertia::render('Letter/Index', [
                 'errors'    => $th->getMessage()
             ]);
         }

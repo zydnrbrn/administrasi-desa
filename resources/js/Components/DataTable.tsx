@@ -12,7 +12,6 @@ import {
     ModalContent,
     ModalHeader,
     ModalFooter,
-    ModalBody,
     ModalCloseButton,
   } from '@chakra-ui/react'
   import { TbTrash, TbEdit } from 'react-icons/tb'
@@ -72,7 +71,7 @@ const Tables = ({ residents }) => {
                     Edit
                 </Button>
                 </InertiaLink>
-                <Button onClick={openModal} className='mx-3' leftIcon={<TbTrash />} colorScheme='red' variant='solid'>
+                <Button onClick={() => deleteResident(penduduk.id)} className='mx-3' leftIcon={<TbTrash />} colorScheme='red' variant='solid'>
                     Hapus
                 </Button>
                 <Modal
@@ -92,7 +91,9 @@ const Tables = ({ residents }) => {
               </ModalContent>
             </Modal>
                </td>
+
            </tr>
+
         ))}
     </Tbody>
   </Table>
