@@ -9,6 +9,7 @@ import useRoute from "@/Hooks/useRoute"
 
 
 export default function Resident(props) {
+    console.log(props)
     const route = useRoute()
     return(
         <>

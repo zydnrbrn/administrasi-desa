@@ -15,6 +15,7 @@ import LetterTables from "@/Components/LetterTable"
 import Paginator from "@/Components/Paginator"
 
 export default function Letter(props) {
+    console.log(props)
     return(
         <>
         <AppLayout
@@ -52,7 +53,7 @@ export default function Letter(props) {
 
                             <div className="content-tabs">
                             <Stack className="" direction='row' spacing={4}>
-                                <InertiaLink href={route('sktm')}>
+                                <InertiaLink href={route('surat.create')}>
                                 <Button className="bg-mainblue w-[120px]" leftIcon={<TbFileDescription />} colorScheme='alpha' variant='solid'>
                                     SKTM
                                 </Button>

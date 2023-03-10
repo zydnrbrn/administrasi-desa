@@ -1,10 +1,10 @@
 import React from "react"
 
-const Sktm = () => {
+const Sktm = (props) => {
+  console.log(props.data)
     return(
         <>
         <meta content="text/html; charset=UTF-8" httpEquiv="content-type" />
-        <title id="title">A Meaningful Page Title</title>
         <style
           type="text/css"
           dangerouslySetInnerHTML={{

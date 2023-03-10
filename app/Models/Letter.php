@@ -12,6 +12,8 @@ class Letter extends Model
 
     protected $table = 'letters';
     protected $guarded = [];
+    protected $dateFormat = 'Y-m-d';
+
 
     public static function boot()
     {
