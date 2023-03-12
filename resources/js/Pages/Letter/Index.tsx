@@ -15,6 +15,7 @@ import LetterTables from "@/Components/LetterTable"
 import Paginator from "@/Components/Paginator"
 
 export default function Letter(props) {
+    console.log(props)
     return(
         <>
         <AppLayout
@@ -31,13 +32,13 @@ export default function Letter(props) {
             <h3 className='text-[25px]'>Buat atau kelola surat disini .</h3>
           </div>
           <div className='content gap-[20px] ml-[20px] mt-[40px]'>
-        <div className='total-residents w-[1300px] bg-abu rounded-[25px]'>
+        <div className='total-residents bg-abu rounded-[25px]'>
         <div className='inline '>
             <Tabs variant='soft-rounded' colorScheme='teal'>
                 <TabList>
                     <Tab><h2>Jurnal Surat</h2></Tab>
                     <Tab><h2>Buat Surat</h2></Tab>
-                    <Tab><h2>Pengaturan Surat</h2></Tab>
+                    {/* <Tab><h2>Pengaturan Surat</h2></Tab> */}
                 </TabList>
                         <TabPanels>
                             <TabPanel>
@@ -52,22 +53,22 @@ export default function Letter(props) {
 
                             <div className="content-tabs">
                             <Stack className="" direction='row' spacing={4}>
-                                <InertiaLink href={route('sktm')}>
+                                <InertiaLink href={route('surat.create')}>
                                 <Button className="bg-mainblue w-[120px]" leftIcon={<TbFileDescription />} colorScheme='alpha' variant='solid'>
                                     SKTM
                                 </Button>
                                 </InertiaLink>
-                                <InertiaLink href={route('skk')}>
+                                {/* <InertiaLink href={route('skk')}>
                                 <Button className="bg-mainblue w-[120px]" leftIcon={<TbFileDescription />} colorScheme='alpha' variant='solid'>
                                     SKK
                                 </Button>
-                                </InertiaLink>
+                                </InertiaLink> */}
                             </Stack>
                             </div>
                             </TabPanel>
                             <TabPanel>
 
-                            <div className="content-tabs">
+                            {/* <div className="content-tabs">
                             <Stack className="" direction='row' spacing={4}>
                                 <InertiaLink href={route('template-sktm')}>
                                 <Button className="bg-mainblue w-[220px]" leftIcon={<TbFileDescription />} colorScheme='alpha' variant='solid'>
@@ -80,7 +81,7 @@ export default function Letter(props) {
                                 </Button>
                                 </InertiaLink>
                             </Stack>
-                            </div>
+                            </div> */}
                             </TabPanel>
                         </TabPanels>
               </Tabs>

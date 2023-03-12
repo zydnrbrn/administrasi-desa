@@ -18,6 +18,7 @@ class LetterTemplateSeeder extends Seeder
     {
         LetterTemplate::create([
             'name'  => 'Template Sktm',
+            'type'  => 'SKTM',
             'title' => Str::random(25),
             'header' => Str::random(25),
             'content' => Str::random(25),

@@ -1,10 +1,9 @@
 <?php
 
+use Inertia\Inertia;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Backoffice\DashboardController;
 use App\Http\Controllers\Backoffice\Letter\LetterController;
-use App\Http\Controllers\Backoffice\Resident\ResidentController;
-use App\Models\Resident;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,11 +32,9 @@ Route::middleware([
 
 
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-    Route::get('/surat', [LetterController::class, 'index'])->name('letter');
+    Route::resource('/surat', \App\Http\Controllers\Backoffice\Letter\LetterController::class);
     Route::resource('/penduduk', \App\Http\Controllers\Backoffice\Resident\ResidentController::class);
-    Route::get('/buat-sktm', [LetterController::class, 'IndexSktm'])->name('sktm');
-    Route::get('/buat-skk', [LetterController::class, 'IndexSkk'])->name('skk');
-    Route::get('/edit-template-sktm', [LetterController::class, 'editTemplateSktm'])->name('template-sktm');
+    Route::get('/sktm', [LetterController::class, 'Sktm']);
 
 
     // END
@@ -47,8 +44,7 @@ Route::middleware([
 
 
     Route::post('/store-sktm', [LetterController::class, 'storeSktm'])->name('store-sktm');
-    Route::post('/store-skk', [LetterController::class, 'storeSkk'])->name('store-skk');
-    Route::post('/create-template-sktm', [LetterController::class, 'storeTemplateSktm'])->name('store-template-sktm');
+    // Route::post('/create-template-sktm', [LetterController::class, 'storeTemplateSktm'])->name('store-template-sktm');
 
 
 
@@ -56,6 +52,12 @@ Route::middleware([
 
     // END
 });
+
+
+// Route Handler
+Route::get('/errors', function () {
+    return Inertia::render('Handler/Error/Error');
+})->name('errors');
 
 
 // Route::group(function () {

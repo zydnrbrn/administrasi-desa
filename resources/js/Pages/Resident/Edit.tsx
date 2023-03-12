@@ -22,7 +22,7 @@ import {
  import AppLayout from "@/Layouts/AppLayout"
 
 export default function Store(props) {
-   const errors = props.error_validation
+   const resident = props.resident
    const [nik, setNik] = useState('')
    const [no_kk, setNoKK] = useState('')
    const [name, setName] = useState('')
@@ -41,12 +41,12 @@ export default function Store(props) {
    const [RT, setRT] = useState('')
    const [RW, setRW] = useState('')
 
-   console.log(errors)
+   console.log(props.errors )
 
-   const storeResident = async (e) => {
+   const editResident = async (e) => {
     e.preventDefault();
 
-    Inertia.post('/penduduk', {
+    Inertia.put(`/penduduk/${resident.resident_id}`, {
         nik: nik,
         no_kk :no_kk,
         name: name,
@@ -69,10 +69,10 @@ export default function Store(props) {
     return(
         <>
            <AppLayout
-      title="Tambah Penduduk"
+      title="Edit Penduduk"
       renderHeader={() => (
         <h2 className="font-semibold text-3xl text-gray-800 leading-tight">
-          Tambah Penduduk ...
+          Edit Penduduk ...
         </h2>
       )}
     >
@@ -81,43 +81,52 @@ export default function Store(props) {
           <div className="greeting ml-[20px]">
             <h3 className='text-[25px]'>Harap pastikan data yang dimasukan sudah benar dan sesuai.</h3>
           </div>
-          {errors && (
+          {/* {errors && (
             <Fade in={errors} animateOpacity>
                <Alert className="rounded-md my-5" status='error'>
                <AlertIcon />
                <AlertTitle>Gagal menambahkan data penduduk</AlertTitle>
                <AlertDescription>
-                <p>Harap pastikan semua terisi dengan benar.</p>
+               <span>{errors}</span>
               </AlertDescription>
              </Alert>
              </Fade>
-          )}
+          )} */}
           <div className='content gap-[20px] ml-[20px] mt-[40px]'>
         <div className='total-residents w-[1000px] bg-abu rounded-[25px]'>
         <div className='inline '>
-
-
-        <form className="m-[15px]" onSubmit={storeResident}>
+        <form className="m-[15px]" onSubmit={editResident}>
       <label>NIK:</label>
       <NumberInput  value={nik} onChange={(e) => setNik(e)} >
-  <NumberInputField  />
+  <NumberInputField placeholder={resident.NIK} />
   <NumberInputStepper>
     <NumberIncrementStepper />
     <NumberDecrementStepper />
   </NumberInputStepper>
 </NumberInput>
+{/* {errors && (
+            <Fade in={errors.nik} animateOpacity>
+               <Alert className="rounded-md my-5 absolute" status='error'>
+               <AlertIcon />
+               <AlertTitle>Gagal menambahkan data penduduk</AlertTitle>
+               <AlertDescription>
+                <span>{errors.nik}</span>
+              </AlertDescription>
+             </Alert>
+             </Fade>
+          )} */}
       <label>No KK :</label>
-      <NumberInput  onChange={(e) => setNoKK(e)}>
-  <NumberInputField value={no_kk} />
+      <NumberInput value={no_kk} onChange={(e) => setNoKK(e)}>
+  <NumberInputField placeholder={resident.KK_code} />
   <NumberInputStepper>
     <NumberIncrementStepper />
     <NumberDecrementStepper />
   </NumberInputStepper>
 </NumberInput>
 <label>Nama:</label>
-      <Input value={name} onChange={(e) => setName(e.target.value)}/>
+      <Input placeholder={resident.name}  value={name} onChange={(e) => setName(e.target.value)}/>
       <label>Tempat Tanggal Lahir:</label>
-      <Input value={ttl} onChange={(e) => setTtl(e.target.value)}/>
+      <Input placeholder={resident.date_place_birth} value={ttl} onChange={(e) => setTtl(e.target.value)}/>
       <label>Jenis Kelamin:</label>
       <RadioGroup defaultValue='1'>
   <Stack onChange={(e) => setGender(e.target.value)} value={gender} spacing={5} direction='row'>
@@ -130,14 +139,14 @@ export default function Store(props) {
   </Stack>
 </RadioGroup>
       <label>Status:</label>
-      <Select defaultValue='Belum Kawin' value={status} onChange={(e) => setStatus(e.target.value)}>
+      <Select value={status} onChange={(e) => setStatus(e.target.value)}>
         <option >Belum Kawin</option>
         <option >Kawin</option>
         <option >Cerai Hidup</option>
         <option >Cerai Mati</option>
         </Select>
       <label>Agama :</label>
-      <Select defaultValue='Islam' value={religion} onChange={(e) => setReligion(e.target.value)}>
+      <Select value={religion} onChange={(e) => setReligion(e.target.value)}>
         <option >Islam</option>
         <option >Kristen</option>
         <option >Katholik</option>
@@ -146,25 +155,25 @@ export default function Store(props) {
         <option >Konghucu</option>
         </Select>
       <label>Pekerjaan</label>
-   <Input value={job} onChange={(e) => setJob(e.target.value)}/>
+   <Input placeholder={resident.job} value={job} onChange={(e) => setJob(e.target.value)}/>
       <label>Kewarganegaraan</label>
-   <Input value={citizenship} onChange={(e) => setCitizenship(e.target.value)}/>
+   <Input placeholder={resident.citizenship} value={citizenship} onChange={(e) => setCitizenship(e.target.value)}/>
       <label>Berlaku Sampai</label>
-   <Input value={valid} onChange={(e) => setValid(e.target.value)}/>
+   <Input placeholder={resident.valid_until} value={valid} onChange={(e) => setValid(e.target.value)}/>
       <label>Provinsi</label>
-   <Input value={province} onChange={(e) => setProvince(e.target.value)}/>
+   <Input placeholder={resident.province} value={province} onChange={(e) => setProvince(e.target.value)}/>
       <label>Kota / Kabupaten</label>
-   <Input value={city} onChange={(e) => setCity(e.target.value)}/>
+   <Input placeholder={resident.city} value={city} onChange={(e) => setCity(e.target.value)}/>
       <label>Kecamatan</label>
-   <Input value={district} onChange={(e) => setDistrict(e.target.value)}/>
+   <Input placeholder={resident.district} value={district} onChange={(e) => setDistrict(e.target.value)}/>
       <label>Desa / Kelurahan</label>
-   <Input value={village} onChange={(e) => setVillage(e.target.value)}/>
+   <Input placeholder={resident.village} value={village} onChange={(e) => setVillage(e.target.value)}/>
       <label>RT</label>
-   <Input value={RT} onChange={(e) => setRT(e.target.value)}/>
+   <Input placeholder={resident.RT} value={RT} onChange={(e) => setRT(e.target.value)}/>
       <label>RW</label>
-   <Input value={RW} onChange={(e) => setRW(e.target.value)}/>
+   <Input placeholder={resident.RW} value={RW} onChange={(e) => setRW(e.target.value)}/>
       <label>Golongan Darah</label>
-   <Input value={goldar} onChange={(e) => setGoldar(e.target.value)}/>
+   <Input placeholder={resident.blood_type} value={goldar} onChange={(e) => setGoldar(e.target.value)}/>
           <Button type="submit" className="bg-mainblue m-[15px]" colorScheme='alpha' variant='solid'>
             Simpan
             </Button>

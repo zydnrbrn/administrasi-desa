@@ -19,7 +19,7 @@ class ResidentController extends Controller
             if (request('search')) {
                 $query->where('name', 'LIKE', '%'.request('search').'%');
             }
-            $data = DB::table('residents')->orderBy('name', 'asc')->paginate(12);
+            $data = DB::table('residents')->orderBy('name', 'asc')->paginate(10);
             return Inertia::render('Resident/Index', [
                 'residents'          => $data
             ]);
@@ -44,13 +44,14 @@ class ResidentController extends Controller
 
     public function store(Request $request) {
         try {
+            DB::beginTransaction();
             $validator = Validator::make($request->all(), [
-                'nik'                  => ['required', 'integer'],
-                'no_kk'                => ['required', 'integer'],
+                'nik'                  => ['required', 'integer', 'unique:residents,NIK'],
+                'no_kk'                => ['required', 'integer', 'unique:residents,name'],
                 'name'                 => ['required', 'string'],
                 'date_place_birth'     => ['required'],
                 'gender'               => ['required'],
-                'religion'             => ['nullable'],
+                'religion'             => ['required'],
                 'marital_status'       => ['required'],
                 'job'                  => ['required'],
                 'citizenship'          => ['required'],
@@ -115,16 +116,19 @@ class ResidentController extends Controller
                 'RW' => $rw
             ]);
 
+            DB::commit();
+
             if($resident) {
                 return redirect()->route('penduduk.index')->with([
-                    'success'       => 'GG'
+                    'success'       => 'Berhasil menambahkan data penduduk !'
                 ]);
             } else {
-                return Inertia::render('Resident/Create', [
-                    'errors'        => 'Gagal menambahkan data penduduk !'
+                return redirect()->route('penduduk.index')->with([
+                    'failed'       => 'Gagal menambahkan data penduduk !'
                 ]);
             }
         } catch (\Throwable $th) {
+            Db::rollBack();
             return Inertia::render('Resident/Create', [
                 'errors'        => $th->getMessage()
             ]);
@@ -133,28 +137,37 @@ class ResidentController extends Controller
     }
 
 
+    public function Edit($penduduk) {
+        $query = "SELECT * FROM residents r LEFT JOIN address a ON a.resident_id = r.id WHERE r.id = ?";
+        $data = DB::select($query, [$penduduk]);
+        return Inertia::render('Resident/Edit', [
+            'resident'  => $data[0]
+        ]);
+    }
 
-    public function update(Request $request) {
-        DB::transaction();
+
+
+    public function update(Request $request, $penduduk) {
+        DB::beginTransaction();
         try {
             $validator = Validator::make($request->all(), [
-                'nik'                  => ['nullable', 'integer'],
+                'nik'                  => ['nullable', 'integer', 'unique:residents,NIK'],
                 'no_kk'                => ['nullable', 'integer'],
-                'name'                 => ['nullable', 'string'],
+                'name'                 => ['nullable', 'string', 'unique:residents,name'],
                 'date_place_birth'     => ['nullable'],
                 'gender'               => ['nullable'],
                 'religion'             => ['nullable'],
                 'marital_status'       => ['nullable'],
                 'job'                  => ['nullable'],
                 'citizenship'          => ['nullable'],
-                'valid_untill'         => ['nullable'],
+                'valid_until'          => ['nullable'],
                 'province'             => ['nullable', 'string',],
                 'city'                 => ['nullable', 'string', ],
                 'district'             => ['nullable', 'string', ],
                 'village'              => ['nullable', 'string', ],
                 'RT'                   => ['nullable', 'string', 'max:6'],
                 'RW'                   => ['nullable', 'string', 'max:6'],
-                'address_detail'       => ['nullalbe', 'string'],
+                'blood_type'           => ['nullable']
             ]);
 
             if($validator->fails()) {
@@ -163,83 +176,84 @@ class ResidentController extends Controller
                 ]);
             }
 
-            $r_id = $request->resident_id;
+            $r_id = $penduduk;
             $nik = $request->nik;
             $no_kk = $request->no_kk;
-            $nama = $request->nama;
-            $ttl = $request->ttl;
-            $alamat = $request->alamat;
+            $nama = $request->name;
+            $ttl = $request->date_place_birth;
             $gender = $request->gender;
-            $agama = $request->agama;
-            $status = $request->status_perkawinan;
-            $job = $request->pekerjaan;
-            $citizenship = $request->kewarganegaraan;
-            $valid = $request->berlaku_sampai;
+            $agama = $request->religion;
+            $status = $request->marital_status;
+            $job = $request->job;
+            $citizenship = $request->citizenship;
+            $valid = $request->valid_until;
+            $province = $request->province;
+            $city = $request->city;
+            $village = $request->village;
+            $district = $request->district;
+            $rt = $request->RT;
+            $rw = $request->RW;
+            $goldar = $request->blood_type;
 
             $resident = Resident::find($r_id);
             $resident->update([
                 'NIK'                       => $nik,
                 'KK_code'                   => $no_kk,
-                'nama'                       => $nama,
-                'date_place_birth'           => $ttl,
-                'alamat'                    => $alamat,
-                'gender'                     => $gender,
-                'religion'                       => $agama,
+                'name'                      => $nama,
+                'date_place_birth'          => $ttl,
+                'gender'                    => $gender,
+                'religion'                  => $agama,
                 'marital_status'            => $status,
                 'job'                       => $job,
                 'citizenship'               => $citizenship,
+                'valid_until'               => $valid,
+                'blood_type'                => $goldar,
                 'valid_until'               => $valid
             ]);
 
-            Address::where('resident_id', $r_id)->update([
-                'province' => \Indonesia::findProvince($request['province_id'], $with = null)->name,
-                'province_id' => $request['province_id'],
-                'city' => \Indonesia::findCity($request['city_id'], $with = null)->name,
-                'city_id' => $request['city_id'],
-                'district' => \Indonesia::findDistrict($request['district_id'], $with = null)->name,
-                'district_id' => $request['district_id'],
-                'village' => \Indonesia::findVillage($request['village_id'], $with = null)->name,
-                'village_id' => $request['village_id'],
-                'rt' => $request['rt'],
-                'rw' => $request['rw'],
-                'latitude' => $request['latitude'],
-                'longitude' => $request['longitude'],
-                'address_detail' => $request['alamat_lengkap']
+            Address::where('resident_id', $penduduk)->update([
+                'province' => $province,
+                'city' => $city,
+                'district' => $district,
+                'village' => $village,
+                'RT' => $rt,
+                'RW' => $rw
             ]);
 
             if($resident) {
-                return Inertia::render('Handler/Succes/Congrat', [
-                    'success'       => 'Berhasil menambahkan penduduk'
+                return redirect()->route('penduduk.index')->with([
+                    'success'       => 'Berhasil menambahkan data penduduk !'
                 ]);
             } else {
-                return Inertia::render('Handler/Error/Failed', [
-                    'failed'        => 'Gagal menambahkan penduduk'
+                return redirect()->route('penduduk.index')->with([
+                    'failed'        => 'Gagal menambahkan data penduduk !'
                 ]);
             }
 
             DB::commit();
         } catch (\Throwable $th) {
-            return Inertia::render('Handler/Error/Error', [
-                'error'             => 'Internal Server Error'
+            DB::rollBack();
+            return Inertia::render('Resident/Edit', [
+                'errors'    => $th->getMessage()
             ]);
         }
     }
 
 
-    public function destroy($id) {
+    public function destroy(Resident $penduduk) {
         try {
-       $delete = Resident::where('id', $id)->delete();
-        if($delete) {
-            return redirect()->route('resident')->with([
-                'success'    => 'Berhasil menghapus penduduk'
+       $penduduk->delete();
+        if($penduduk) {
+            return redirect()->route('penduduk.index')->with([
+                'residents'    => 'Berhasil menghapus penduduk !'
             ]);
         } else {
-            return redirect()->route('resident')->with([
-                'failed'    => 'Gagal menghapus penduduk'
+            return redirect()->route('penduduk.index')->with([
+                'residents'    => 'Gagal menghapus penduduk !'
             ]);
         }
         } catch (\Throwable $th) {
-            return redirect()->route('resident')->with([
+            return redirect()->route('penduduk.index')->with([
                 'errors'    => $th->getMessage()
             ]);
         }

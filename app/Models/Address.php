@@ -4,8 +4,8 @@ namespace App\Models;
 
 use Webpatser\Uuid\Uuid;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Address extends Model
 {
@@ -21,8 +21,8 @@ class Address extends Model
         });
     }
 
-    public function resident(): BelongsTo
+    public function resident(): HasOne
     {
-        return $this->belongsTo(Resident::class, 'id');
+        return $this->HasOne(Resident::class);
     }
 }

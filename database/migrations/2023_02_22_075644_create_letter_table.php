@@ -17,11 +17,8 @@ return new class extends Migration
             $table->uuid('id');
             $table->string('no_surat');
             $table->integer('NIK');
-            $table->string('title');
-            $table->string('header');
-            $table->string('content');
-            $table->string('footer');
             $table->string('type');
+            $table->string('objective')->nullable();
             $table->timestamps();
 
             $table->foreign('NIK')

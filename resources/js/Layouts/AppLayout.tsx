@@ -51,7 +51,7 @@ export default function AppLayout({
       <Banner />
       <div className="flex min-h-screen">
       <Collapse in={isOpen} >
-      <Box className={`min-h-screen p-10 bg-mainblue text-putih rounded-[10px] ml-[10px] my-5 ${isOpen ? ' ' : '' }`} >
+      <Box className={`min-h-screen p-10 bg-mainblue text-putih rounded-[10px] ml-[10px] my-5 ${isOpen ? '' : '' }`} >
         <div className="flex justify-center ml-[10px]">
         <ApplicationMark/>
          <InertiaLink href={route('dashboard')}>
@@ -63,10 +63,10 @@ export default function AppLayout({
             <NavLink href={route('dashboard')} active={route().current('dashboard')}>
             <Button colorScheme='Alpha' ><TbLayoutDashboard className='w-[40px] h-[40px] pr-[10px]'/><h1 className='font-bold'>Dashboard</h1></Button>
             </NavLink>
-            <NavLink href={route('letter')} active={route().current('letter')}>
+            <NavLink href={route('surat.index')} active={route().current('surat.index')}>
             <Button colorScheme='Alpha' ><TbFileDescription className='w-[40px] h-[40px] pr-[10px]'/><h1 className='font-bold'>Surat Menyurat</h1></Button>
             </NavLink>
-            <NavLink href={route('penduduk.index')} active={route().current('resident')}>
+            <NavLink href={route('penduduk.index')} active={route().current('penduduk.index')}>
             <Button colorScheme='Alpha' ><TbUsers className='w-[40px] h-[40px] pr-[10px]'/><h1 className='font-bold'>Data Penduduk</h1></Button>
             </NavLink>
             <NavLink href={route('profile.show')} active={route().current('profile.show')}>

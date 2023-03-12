@@ -1,41 +1,10 @@
-import React, {useState} from "react"
-import NavLink from "@/Components/NavLink"
-import { Button,
-        Input,
-        Drawer,
-        DrawerBody,
-        DrawerFooter,
-        DrawerHeader,
-        DrawerOverlay,
-        DrawerContent,
-        DrawerCloseButton,
-        ListItem,
-        OrderedList,
-        useDisclosure } from '@chakra-ui/react'
-import { TbArrowBackUp, TbCircleCheck, TbAlertCircle } from "react-icons/tb"
-import { Inertia } from "@inertiajs/inertia"
+import React from "react"
 
-const Sktm = () => {
-    const { isOpen, onOpen, onClose } = useDisclosure()
-    const btnRef = React.useRef()
-
-    const [nik, setNik] = useState('')
-    const [no_surat, setNo] = useState('')
-    const [objective, setObject] = useState('')
-
-    const storeSktm = async (e) => {
-        e.preventDefault();
-
-        Inertia.post('/surat', {
-            nik: nik,
-            no_surat: no_surat,
-            objective: objective
-        });
-       }
+const Sktm = (props) => {
+  console.log(props.data)
     return(
         <>
         <meta content="text/html; charset=UTF-8" httpEquiv="content-type" />
-        <title id="title">Buat Surat Keterangan Tidak Mampu</title>
         <style
           type="text/css"
           dangerouslySetInnerHTML={{
@@ -44,7 +13,7 @@ const Sktm = () => {
           }}
         />
         <p className="c1">
-          <span className="c16 c24">PEMERINTAH KABUPATEN BANDUNG BARAT</span>
+          <span className="c16 c24">PEMERINTAH KABUPATEN SIMULASI</span>
           <span
             style={{
               overflow: "hidden",
@@ -68,14 +37,15 @@ const Sktm = () => {
                 transform: "rotate(0rad) translateZ(0px)",
                 WebkitTransform: "rotate(0rad) translateZ(0px)"
               }}
+              title=""
             />
           </span>
         </p>
         <p className="c1">
-          <span className="c16 c33">KECAMATAN GUNUNGHALU</span>
+          <span className="c16 c33">KECAMATAN CONTOH</span>
         </p>
         <p className="c1">
-          <span className="c16 c28">DESA BUNIJAYA</span>
+          <span className="c16 c28">DESA ILUSTRASI</span>
         </p>
         <p className="c1">
           <span className="c16 c17">Jln. Jenderal Sudirman No. 9 Kode Pos 99999</span>
@@ -104,6 +74,7 @@ const Sktm = () => {
                 transform: "rotate(0rad) translateZ(0px)",
                 WebkitTransform: "rotate(0rad) translateZ(0px)"
               }}
+              title=""
             />
           </span>
         </p>
@@ -125,7 +96,6 @@ const Sktm = () => {
         <p className="c13 c8">
           <span className="c10" />
         </p>
-        <div className="relative sm:mx-0 lg:mx-[500px]">
         <p className="c13">
           <span className="c10">
             Yang bertandatangan dibawah ini Kepala Desa Ilustrasi Kecamatan Contoh
@@ -140,10 +110,8 @@ const Sktm = () => {
         </p>
         <a id="t.50e80d8157270bdc039504479170f72f341ade4b" />
         <a id="t.0" />
-        <form onSubmit={storeSktm}>
         <table className="c32">
           <tbody>
-
             <tr className="c11">
               <td className="c19" colSpan={1} rowSpan={1}>
                 <p className="c4">
@@ -199,55 +167,49 @@ const Sktm = () => {
               </td>
               <td className="c20" colSpan={1} rowSpan={1}>
                 <p className="c4 c23">
-                <span className="c2">……………………………………………</span>
+                  <span className="c2">……………………………………………</span>
                 </p>
                 <p className="c4">
-                  <Input  value={nik} onChange={(e) => setNik(e.target.value)} isRequired size='xs' width={270} variant='flushed'></Input>
+                  <span className="c2">……………………………………………</span>
                 </p>
                 <p className="c4">
-                <span className="c2">……………………………………………</span>
+                  <span className="c2">……………………………………………</span>
                 </p>
                 <p className="c4">
-                <span className="c2">……………………………………………</span>
+                  <span className="c2">………………………….………………...</span>
                 </p>
                 <p className="c4">
-                <span className="c2">……………………………………………</span>
+                  <span className="c2">……………………………………………</span>
                 </p>
                 <p className="c4">
-                <span className="c2">……………………………………………</span>
+                  <span className="c2">……………………………………………</span>
                 </p>
                 <p className="c4">
-                <span className="c2">……………………………………………</span>
+                  <span className="c2">……………………………………………</span>
                 </p>
                 <p className="c14">
-                  <span className="c2">Dusun &nbsp;………………… RT : …… / ……</span>
+                  <span className="c2">Dusun &nbsp;………………… RT : ….. / ……</span>
                 </p>
                 <p className="c14">
-                  <span className="c2">Desa Bunijaya</span>
+                  <span className="c2">Desa Ilustrasi</span>
                 </p>
                 <p className="c14">
-                  <span className="c2">Kecamatan Gununghalu</span>
+                  <span className="c2">Kecamatan Contoh</span>
                 </p>
                 <p className="c14">
-                  <span className="c2">Kabupaten Bandung Barat</span>
+                  <span className="c2">Kabupaten Simulasi</span>
                 </p>
               </td>
             </tr>
-               {/* </form> */}
           </tbody>
         </table>
-        <div className="fixed bottom-5 right-4">
-                                <Button type="submit" className="bg-mainblue font-sans w-[120px]" leftIcon={<TbCircleCheck />} colorScheme='alpha' variant='solid'>
-                                    Simpan
-                                </Button>
-            </div>
         <p className="c4 c8">
           <span className="c2" />
         </p>
         <p className="c9">
           <span className="c2">
             Orang tersebut diatas sepanjang sepengetahuan kami dan berdasarkan Surat
-            Keterangan Tidak Mampu Nomor : <Input value={no_surat} onChange={(e) => setNo(e.target.value)}></Input> dari
+            Keterangan Tidak Mampu Nomor : 470/ &nbsp; &nbsp;/ &nbsp; / 20… dari
             Kepala Dusun ………. , benar bahwa orang tersebut tergolong Warga Tidak Mampu
             &nbsp;/ &nbsp;Prasejahtera .
           </span>
@@ -264,9 +226,8 @@ const Sktm = () => {
           <span className="c2" />
         </p>
         <p className="c1 c31">
-          <span className="c2">“ <Input value={objective} onChange={(e) => setObject(e.target.value)} width={500} variant='flushed' size='xs'></Input> “</span>
+          <span className="c2">“ BEROBAT DI RUMAH SAKIT UMUM “</span>
         </p>
-        </form>
         <p className="c0">
           <span className="c2" />
         </p>
@@ -282,13 +243,12 @@ const Sktm = () => {
         <p className="c0 c21">
           <span className="c2" />
         </p>
-        </div>
         <p className="c1 c3">
           <span className="c2">
-            Dibuat di &nbsp; &nbsp; &nbsp; : &nbsp;Desa Bunijaya
+            Dibuat di &nbsp; &nbsp; &nbsp; : &nbsp;Desa Ilustrasi
           </span>
         </p>
-        <p className="c1 c3 my-2">
+        <p className="c1 c3">
           <span className="c16">&nbsp; </span>
           <span className="c16 c27">
             Pada tanggal &nbsp;: &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
@@ -296,7 +256,7 @@ const Sktm = () => {
           </span>
         </p>
         <p className="c1 c3">
-          <span className="c2">Kepala Desa Bunijaya</span>
+          <span className="c2">Kepala Desa Ilustrasi</span>
         </p>
         <p className="c0">
           <span className="c2" />
@@ -307,14 +267,8 @@ const Sktm = () => {
         <p className="c1 c3 c8">
           <span className="c2" />
         </p>
-        <p className="c1 c3 c8">
-          <span className="c2" />
-        </p>
-        <p className="c1 c3 c8">
-          <span className="c2" />
-        </p>
         <p className="c1 c3">
-          <span className="c27 c16">HJ JAMIL IKHSAN FARUQ</span>
+          <span className="c27 c16">NAMA KADES</span>
         </p>
         <p className="c15 c18">
           <span className="c2">&nbsp; &nbsp; &nbsp;</span>
@@ -328,42 +282,7 @@ const Sktm = () => {
         <p className="c0">
           <span className="c26 c16" />
         </p>
-            <div className="fixed bottom-4 left-4">
-            <NavLink href={route('surat.index')}>
-                                <Button className="bg-mainblue font-sans w-[120px]" leftIcon={<TbArrowBackUp />} colorScheme='alpha' variant='solid'>
-                                    Kembali
-                                </Button>
-                                </NavLink>
-            </div>
-            <div className="fixed top-4 left-4">
-            <Button ref={btnRef} onClick={onOpen} className="bg-mainblue font-sans w-[50px]" colorScheme='alpha' variant='solid'>
-                                <TbAlertCircle />
-                                </Button>
-            </div>
-            <Drawer
-        isOpen={isOpen}
-        placement='right'
-        onClose={onClose}
-        finalFocusRef={btnRef}
-        size='sm'
-      >
-        <DrawerOverlay />
-        <DrawerContent>
-          <DrawerCloseButton />
-          <DrawerHeader>Hal yang harus diperhatikan ...</DrawerHeader>
-          <DrawerBody>
-          <OrderedList className="font-sans">
-  <ListItem>Pastikan semua data yang dimasukan benar benar data yang valid, dikarenakan surat yang sudah dibuat tidak bisa diubah.</ListItem>
-  <ListItem>Untuk data identitas penduduk cukup memasukan NIK nya saja, karena data lengkapnya diambil dari data list penduduk.</ListItem>
-  <ListItem>Untuk tampilan pada saat akan di print, tampilan nya kurang lebih akan seperti halaman ini.</ListItem>
-</OrderedList>
-          </DrawerBody>
-
-          <DrawerFooter>
-          </DrawerFooter>
-        </DrawerContent>
-      </Drawer>
-
+        <p className="c15">
           <span className="c16">
             &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
             &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
@@ -371,6 +290,7 @@ const Sktm = () => {
             &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
             &nbsp; &nbsp; &nbsp;
           </span>
+        </p>
         <p className="c0 c5">
           <span className="c2" />
         </p>
