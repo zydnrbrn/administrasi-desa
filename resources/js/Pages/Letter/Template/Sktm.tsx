@@ -1,10 +1,30 @@
-import React from "react"
+import React, {useState} from "react"
+import NavLink from "@/Components/NavLink"
+import { Button,
+        Input,
+        Drawer,
+        DrawerBody,
+        DrawerFooter,
+        DrawerHeader,
+        DrawerOverlay,
+        DrawerContent,
+        DrawerCloseButton,
+        ListItem,
+        OrderedList,
+        useDisclosure } from '@chakra-ui/react'
+import { TbArrowBackUp, TbFileDownload, TbAlertCircle } from "react-icons/tb"
+import { Inertia } from "@inertiajs/inertia"
 
-const Sktm = () => {
+const Sktm = (props) => {
+    const data = props.data
+    console.log(data)
+    const { isOpen, onOpen, onClose } = useDisclosure()
+    const btnRef = React.useRef()
+
     return(
         <>
         <meta content="text/html; charset=UTF-8" httpEquiv="content-type" />
-        <title id="title">A Meaningful Page Title</title>
+        <title id="title">Buat Surat Keterangan Tidak Mampu</title>
         <style
           type="text/css"
           dangerouslySetInnerHTML={{
@@ -13,7 +33,7 @@ const Sktm = () => {
           }}
         />
         <p className="c1">
-          <span className="c16 c24">PEMERINTAH KABUPATEN SIMULASI</span>
+          <span className="c16 c24">PEMERINTAH KABUPATEN BANDUNG BARAT</span>
           <span
             style={{
               overflow: "hidden",
@@ -37,15 +57,14 @@ const Sktm = () => {
                 transform: "rotate(0rad) translateZ(0px)",
                 WebkitTransform: "rotate(0rad) translateZ(0px)"
               }}
-              title=""
             />
           </span>
         </p>
         <p className="c1">
-          <span className="c16 c33">KECAMATAN CONTOH</span>
+          <span className="c16 c33">KECAMATAN GUNUNGHALU</span>
         </p>
         <p className="c1">
-          <span className="c16 c28">DESA ILUSTRASI</span>
+          <span className="c16 c28">DESA BUNIJAYA</span>
         </p>
         <p className="c1">
           <span className="c16 c17">Jln. Jenderal Sudirman No. 9 Kode Pos 99999</span>
@@ -74,7 +93,6 @@ const Sktm = () => {
                 transform: "rotate(0rad) translateZ(0px)",
                 WebkitTransform: "rotate(0rad) translateZ(0px)"
               }}
-              title=""
             />
           </span>
         </p>
@@ -86,8 +104,7 @@ const Sktm = () => {
         </p>
         <p className="c1">
           <span className="c16 c29">
-            NOMOR : &nbsp;470 / &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;/ &nbsp; &nbsp;
-            &nbsp; &nbsp; /20..
+            NOMOR : &nbsp; {data.no_surat}
           </span>
         </p>
         <p className="c0">
@@ -96,6 +113,7 @@ const Sktm = () => {
         <p className="c13 c8">
           <span className="c10" />
         </p>
+        <div className="relative sm:mx-0 lg:mx-[500px]">
         <p className="c13">
           <span className="c10">
             Yang bertandatangan dibawah ini Kepala Desa Ilustrasi Kecamatan Contoh
@@ -112,6 +130,7 @@ const Sktm = () => {
         <a id="t.0" />
         <table className="c32">
           <tbody>
+
             <tr className="c11">
               <td className="c19" colSpan={1} rowSpan={1}>
                 <p className="c4">
@@ -167,50 +186,56 @@ const Sktm = () => {
               </td>
               <td className="c20" colSpan={1} rowSpan={1}>
                 <p className="c4 c23">
-                  <span className="c2">……………………………………………</span>
+                <span className="c2">{data.name}</span>
                 </p>
                 <p className="c4">
-                  <span className="c2">……………………………………………</span>
+                  {data.NIK}
                 </p>
                 <p className="c4">
-                  <span className="c2">……………………………………………</span>
+                <span className="c2">{data.date_place_birth}</span>
                 </p>
                 <p className="c4">
-                  <span className="c2">………………………….………………...</span>
+                <span className="c2">{data.gender}</span>
                 </p>
                 <p className="c4">
-                  <span className="c2">……………………………………………</span>
+                <span className="c2">{data.religion}</span>
                 </p>
                 <p className="c4">
-                  <span className="c2">……………………………………………</span>
+                <span className="c2">{data.marital_status}</span>
                 </p>
                 <p className="c4">
-                  <span className="c2">……………………………………………</span>
+                <span className="c2">{data.job}</span>
                 </p>
                 <p className="c14">
-                  <span className="c2">Dusun &nbsp;………………… RT : ….. / ……</span>
+                  <span className="c2">Dusun &nbsp;{data.street} RT : {data.RT} / {data.RW}</span>
                 </p>
                 <p className="c14">
-                  <span className="c2">Desa Ilustrasi</span>
+                  <span className="c2">Desa Bunijaya</span>
                 </p>
                 <p className="c14">
-                  <span className="c2">Kecamatan Contoh</span>
+                  <span className="c2">Kecamatan Gununghalu</span>
                 </p>
                 <p className="c14">
-                  <span className="c2">Kabupaten Simulasi</span>
+                  <span className="c2">Kabupaten Bandung Barat</span>
                 </p>
               </td>
             </tr>
+               {/* </form> */}
           </tbody>
         </table>
+        <div className="fixed bottom-5 right-4">
+                                <Button className="bg-mainblue font-sans w-[120px]" leftIcon={<TbFileDownload />} colorScheme='alpha' variant='solid'>
+                                    Download
+                                </Button>
+            </div>
         <p className="c4 c8">
           <span className="c2" />
         </p>
         <p className="c9">
           <span className="c2">
             Orang tersebut diatas sepanjang sepengetahuan kami dan berdasarkan Surat
-            Keterangan Tidak Mampu Nomor : 470/ &nbsp; &nbsp;/ &nbsp; / 20… dari
-            Kepala Dusun ………. , benar bahwa orang tersebut tergolong Warga Tidak Mampu
+            Keterangan Tidak Mampu Nomor : {data.no_surat} dari
+            Kepala Dusun {data.street}. , benar bahwa orang tersebut tergolong Warga Tidak Mampu
             &nbsp;/ &nbsp;Prasejahtera .
           </span>
         </p>
@@ -226,7 +251,7 @@ const Sktm = () => {
           <span className="c2" />
         </p>
         <p className="c1 c31">
-          <span className="c2">“ BEROBAT DI RUMAH SAKIT UMUM “</span>
+          <span className="c2">“ {data.objective}“</span>
         </p>
         <p className="c0">
           <span className="c2" />
@@ -243,20 +268,20 @@ const Sktm = () => {
         <p className="c0 c21">
           <span className="c2" />
         </p>
+        </div>
         <p className="c1 c3">
           <span className="c2">
-            Dibuat di &nbsp; &nbsp; &nbsp; : &nbsp;Desa Ilustrasi
+            Dibuat di &nbsp; &nbsp; &nbsp; : &nbsp;Desa Bunijaya
           </span>
         </p>
-        <p className="c1 c3">
+        <p className="c1 c3 my-2">
           <span className="c16">&nbsp; </span>
           <span className="c16 c27">
-            Pada tanggal &nbsp;: &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-            &nbsp; &nbsp;20..
+            Pada tanggal &nbsp;: {data.created_at} 
           </span>
         </p>
         <p className="c1 c3">
-          <span className="c2">Kepala Desa Ilustrasi</span>
+          <span className="c2">Kepala Desa Bunijaya</span>
         </p>
         <p className="c0">
           <span className="c2" />
@@ -267,8 +292,14 @@ const Sktm = () => {
         <p className="c1 c3 c8">
           <span className="c2" />
         </p>
+        <p className="c1 c3 c8">
+          <span className="c2" />
+        </p>
+        <p className="c1 c3 c8">
+          <span className="c2" />
+        </p>
         <p className="c1 c3">
-          <span className="c27 c16">NAMA KADES</span>
+          <span className="c27 c16">HJ JAMIL IKHSAN FARUQ</span>
         </p>
         <p className="c15 c18">
           <span className="c2">&nbsp; &nbsp; &nbsp;</span>
@@ -282,7 +313,42 @@ const Sktm = () => {
         <p className="c0">
           <span className="c26 c16" />
         </p>
-        <p className="c15">
+            <div className="fixed bottom-4 left-4">
+            <NavLink href={route('surat.index')}>
+                                <Button className="bg-mainblue font-sans w-[120px]" leftIcon={<TbArrowBackUp />} colorScheme='alpha' variant='solid'>
+                                    Kembali
+                                </Button>
+                                </NavLink>
+            </div>
+            <div className="fixed top-4 left-4">
+            <Button ref={btnRef} onClick={onOpen} className="bg-mainblue font-sans w-[50px]" colorScheme='alpha' variant='solid'>
+                                <TbAlertCircle />
+                                </Button>
+            </div>
+            <Drawer
+        isOpen={isOpen}
+        placement='right'
+        onClose={onClose}
+        finalFocusRef={btnRef}
+        size='sm'
+      >
+        <DrawerOverlay />
+        <DrawerContent>
+          <DrawerCloseButton />
+          <DrawerHeader>Hal yang harus diperhatikan ...</DrawerHeader>
+          <DrawerBody>
+          <OrderedList className="font-sans">
+  <ListItem>Pastikan semua data yang dimasukan benar benar data yang valid, dikarenakan surat yang sudah dibuat tidak bisa diubah.</ListItem>
+  <ListItem>Untuk data identitas penduduk cukup memasukan NIK nya saja, karena data lengkapnya diambil dari data list penduduk.</ListItem>
+  <ListItem>Untuk tampilan pada saat akan di print, tampilan nya kurang lebih akan seperti halaman ini.</ListItem>
+</OrderedList>
+          </DrawerBody>
+
+          <DrawerFooter>
+          </DrawerFooter>
+        </DrawerContent>
+      </Drawer>
+
           <span className="c16">
             &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
             &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
@@ -290,7 +356,6 @@ const Sktm = () => {
             &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
             &nbsp; &nbsp; &nbsp;
           </span>
-        </p>
         <p className="c0 c5">
           <span className="c2" />
         </p>

@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Models\LetterTemplate;
 use Illuminate\Support\Facades\Validator;
+use Barryvdh\DomPDF\Facade as PDF;
+
 
 class LetterController extends Controller
 {
@@ -35,10 +37,10 @@ class LetterController extends Controller
 
     public function show(Letter $surat) {
         try {
-              $data = DB::table('letters')->join('residents', 'letters.NIK', '=', 'residents.NIK')->where('letters.id', $surat->id)->get();
+              $data = DB::table('letters')->join('residents', 'letters.NIK', '=', 'residents.NIK')->join('address', 'residents.id', '=', 'address.resident_id')->where('letters.id', $surat->id)->get();
             if($data) {
                 return Inertia::render('Letter/Sktm', [
-                    'data'  => $data
+                    'data'  => $data[0]
                 ]);
             } else {
                 return Inertia::render('Letter/Index', [
@@ -89,7 +91,6 @@ class LetterController extends Controller
 
         } catch(\Throwable $th) {
             return redirect()->route('surat.create')->with([
-
             ], 500);
         }
     }
@@ -99,78 +100,8 @@ class LetterController extends Controller
     }
 
 
-
-
-
-
-    public function editTemplateSktm() {
-        try
-        {
-            return Inertia::render('Letter/EditTemplateSktm');
-        } catch(\Throwable $th) {
-            return Inertia::render('Letter/EditTemplateSktm', [
-                'errors'    => $th->getMessage()
-            ]);
-        }
-    }
-
-
-    public function storeTemplateSktm(Request $request) {
-        try {
-            $validator = Validator::make($request->all(), [
-                'name'          => ['required'],
-                'title'           => ['required'],
-                'header'           => ['required'],
-                'content'        => ['required'],
-                'footer'       => ['required'],
-            ]);
-
-            if($validator->fails()) {
-                return redirect()->route('template-sktm')->with([
-                    'error'     => $validator->errors()
-                ], 400);
-            }
-
-            $name = $request->name;
-            $title = $request->title;
-            $header = $request->header;
-            $content = $request->content;
-            $footer = $request->footer;
-
-            $template = LetterTemplate::crete([
-                'name'          => $name,
-                'type'          => 'SKTM',
-                'title'           => $title,
-                'header'           => $header,
-                'content'        => $content,
-                'footer'       => $footer,
-            ]);
-
-            if($template) {
-                return response()->json([
-                    'success'     => 'Berhasil menambahkan template sktm'
-                ], 200);
-            } else {
-                return response()->json([
-                    'failed'     => 'Gagal menambahkan template sktm'
-                ], 400);
-            }
-
-
-        } catch(\Throwable $th) {
-            return redirect()->route('template-sktm')->with([
-                'errors'     => $th->getMessage()
-            ], 500);
-        }
-    }
-
     public function destroy(Letter $surat) {
         try {
-            // $check_id = Letter::select("id")->where("id", $surat)->doesnExist();
-            // if($check_id) {
-            //     return redirect()->route('surat.index')->with([
-            //         'errors'    => 'ID not found'
-            //     ]);
               $surat->delete();
                 if($surat) {
                     return redirect()->route('surat.index')->with([

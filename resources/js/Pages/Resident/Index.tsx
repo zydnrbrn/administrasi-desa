@@ -1,4 +1,4 @@
-import React from "react"
+import React, {useState} from "react"
 import AppLayout from "@/Layouts/AppLayout"
 import { TbSearch, TbFriends } from "react-icons/tb"
 import { Input, Button, InputLeftElement, InputGroup } from '@chakra-ui/react'
@@ -6,11 +6,23 @@ import Tables from "@/Components/DataTable"
 import Paginator from "@/Components/Paginator"
 import { InertiaLink } from "@inertiajs/inertia-react"
 import useRoute from "@/Hooks/useRoute"
+import { Inertia } from "@inertiajs/inertia"
 
 
 export default function Resident(props) {
+    function getParameterByName(name: string) {
+        const uri = window.location.search
+        const match = RegExp('[?&]' + name + '=([^&]*)').exec(uri)
+        return match && decodeURIComponent(match[1].replace(/\+/g, ' '))
+    }
+
     console.log(props)
     const route = useRoute()
+    const search = getParameterByName('search') || '';
+
+    const handleSearch = (query: string) => {
+         Inertia.get('/penduduk', { search : query }, { preserveState: true });
+    }
     return(
         <>
         <AppLayout
@@ -31,7 +43,10 @@ export default function Resident(props) {
             pointerEvents='none'
             children={<TbSearch color='gray.300' />}
             />
-            <Input type='tel' placeholder='Cari ...' />
+            <Input name="query"
+     onChange={(e) => handleSearch(e.target.value)}
+     value={search} type='tel' placeholder='Cari ...'
+      />
         </InputGroup>
         <InertiaLink href={route('penduduk.create')}>
         <Button leftIcon={<TbFriends />} colorScheme="alpha" className="bg-mainblue ml-[20px]">Tambah Penduduk</Button>

@@ -37,11 +37,12 @@ export default function Store(props) {
    const [city, setCity] = useState('')
    const [district, setDistrict] = useState('')
    const [village, setVillage] = useState('')
+   const [kampung, setKampung] = useState('')
    const [goldar, setGoldar] = useState('')
    const [RT, setRT] = useState('')
    const [RW, setRW] = useState('')
 
-   console.log(props.errors )
+   console.log(props.resident )
 
    const editResident = async (e) => {
     e.preventDefault();
@@ -61,6 +62,7 @@ export default function Store(props) {
         city: city,
         district: district,
         village: village,
+        kampung: kampung,
         RT: RT,
         RW: RW,
         blood_type: goldar,
@@ -166,7 +168,9 @@ export default function Store(props) {
    <Input placeholder={resident.city} value={city} onChange={(e) => setCity(e.target.value)}/>
       <label>Kecamatan</label>
    <Input placeholder={resident.district} value={district} onChange={(e) => setDistrict(e.target.value)}/>
-      <label>Desa / Kelurahan</label>
+      <label>Kampung</label>
+   <Input placeholder={resident.street} value={village} onChange={(e) => setVillage(e.target.value)}/>
+    <label>Desa / Kelurahan</label>
    <Input placeholder={resident.village} value={village} onChange={(e) => setVillage(e.target.value)}/>
       <label>RT</label>
    <Input placeholder={resident.RT} value={RT} onChange={(e) => setRT(e.target.value)}/>
