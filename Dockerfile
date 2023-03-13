@@ -32,7 +32,7 @@ COPY --from=composer /app /var/www/html
 
 # Copy React Application from Node Build
 COPY --from=node /app/public /var/www/html/public
-COPY ./webpack.mix.js /var/www/html/
+COPY ./vite.config.js /var/www/html/
 COPY ./resources/js /var/www/html/resources/js
 
 # Set permissions and environment variables
