@@ -150,7 +150,7 @@ class ResidentController extends Controller
 
 
 
-    public function update(Request $request, $penduduk) {
+    public function update(Request $request, Resident $penduduk) {
         // DB::beginTransaction();
         try {
             $validator = Validator::make($request->all(), [
@@ -200,8 +200,7 @@ class ResidentController extends Controller
             $rw = $request->RW;
             $goldar = $request->blood_type;
 
-            $resident = Resident::find($r_id);
-            $resident->update([
+            $penduduk->update([
                 // 'NIK'                       => $nik,
                 // 'KK_code'                   => $no_kk,
                 'name'                      => $nama,
@@ -213,10 +212,9 @@ class ResidentController extends Controller
                 'citizenship'               => $citizenship,
                 'valid_until'               => $valid,
                 'blood_type'                => $goldar,
-                'valid_until'               => $valid
             ]);
 
-            Address::where('resident_id', $penduduk)->update([
+            Address::where('resident_id', $penduduk->id)->update([
                 'province' => $province,
                 'city' => $city,
                 'district' => $district,
@@ -226,7 +224,7 @@ class ResidentController extends Controller
                 'RW' => $rw
             ]);
 
-            if($resident) {
+            if($penduduk) {
                 return redirect()->route('penduduk.index')->with([
                     'success'       => 'Berhasil mengubah data penduduk !'
                 ]);

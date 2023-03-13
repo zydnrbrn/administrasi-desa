@@ -1,7 +1,6 @@
-import React, {useState, useRef} from "react"
+import React, {useRef} from "react"
 import NavLink from "@/Components/NavLink"
 import { Button,
-        Input,
         Drawer,
         DrawerBody,
         DrawerFooter,
@@ -14,19 +13,16 @@ import { Button,
         useDisclosure } from '@chakra-ui/react'
 import { TbArrowBackUp, TbFileDownload, TbAlertCircle } from "react-icons/tb"
 import Pdf from 'react-to-pdf';
-// import { Inertia } from "@inertiajs/inertia"
-// import { PDFExport } from "@progress/kendo-react-pdf";
-// import html2canvas from "html2canvas";
 
 const Sktm = (props) => {
     const data = props.data
-    console.log(data)
     const { isOpen, onOpen, onClose } = useDisclosure()
     const btnRef = React.useRef()
     const ref = useRef(null)
 
     return(
         <>
+             <div ref={ref}>
         <meta content="text/html; charset=UTF-8" httpEquiv="content-type" />
         <title id="title">Buat Surat Keterangan Tidak Mampu</title>
         <style
@@ -37,34 +33,9 @@ const Sktm = (props) => {
           }}
         />
            {/*// <PDFExport ref={pdfExportComponent}> */}
-        <div ref={ref}>
-        <p className="c1">
+
+        <p className="c1 mt-10">
           <span className="c16 c24">PEMERINTAH KABUPATEN BANDUNG BARAT</span>
-          <span
-            style={{
-              overflow: "hidden",
-              display: "inline-block",
-              margin: "0px 0px",
-              border: "0px solid #000000",
-              transform: "rotate(0rad) translateZ(0px)",
-              WebkitTransform: "rotate(0rad) translateZ(0px)",
-              width: "94.33px",
-              height: "92.67px"
-            }}
-          >
-            <img
-              alt=""
-              src="https://ik.imagekit.io/3upgjbxqx/administrasi-desa/desa-bunijaya/image1.png?ik-sdk-version=javascript-1.4.3&updatedAt=1678246649505"
-              style={{
-                width: "94.33px",
-                height: "92.67px",
-                marginLeft: "-0px",
-                marginTop: "-0px",
-                transform: "rotate(0rad) translateZ(0px)",
-                WebkitTransform: "rotate(0rad) translateZ(0px)"
-              }}
-            />
-          </span>
         </p>
         <p className="c1">
           <span className="c16 c33">KECAMATAN GUNUNGHALU</span>
@@ -278,7 +249,7 @@ const Sktm = (props) => {
         <p className="c1 c3 my-2">
           <span className="c16">&nbsp; </span>
           <span className="c16 c27">
-            Pada tanggal &nbsp;: {data.created_at} 
+            Pada tanggal &nbsp;: {data.created_at}
           </span>
         </p>
         <p className="c1 c3">
@@ -314,31 +285,21 @@ const Sktm = (props) => {
         <p className="c0">
           <span className="c26 c16" />
         </p>
-        </div>
+
         {/*</PDFExport>*/}
-            <div className="fixed bottom-4 left-4">
-            <NavLink href={route('surat.index')}>
-                                <Button className="bg-mainblue font-sans w-[120px]" leftIcon={<TbArrowBackUp />} colorScheme='alpha' variant='solid'>
-                                    Kembali
-                                </Button>
-                                </NavLink>
-            </div>
-            <div className="fixed top-4 left-4">
-            <Button ref={btnRef} onClick={onOpen} className="bg-mainblue font-sans w-[50px]" colorScheme='alpha' variant='solid'>
-                                <TbAlertCircle />
-                                </Button>
-            </div>
-             <div className="fixed bottom-5 right-4">
-             <Pdf targetRef={ref} filename="Surat Keterangan Kematian.pdf" paperSize="A4" margin="2cm">
-                {({ toPdf }) => (
-          <Button onClick={toPdf}  className="bg-mainblue font-sans w-[120px]" leftIcon={<TbFileDownload />} colorScheme='alpha' variant='solid'>
-                                    Download
-                                </Button>
-        )}
-       
-                                </Pdf>
-            </div>
-            <Drawer
+          <span className="c16">
+            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+            &nbsp; &nbsp; &nbsp;
+          </span>
+        <p className="c0 c5">
+          <span className="c2" />
+        </p>
+        </div>
+
+        <Drawer
         isOpen={isOpen}
         placement='right'
         onClose={onClose}
@@ -361,17 +322,27 @@ const Sktm = (props) => {
           </DrawerFooter>
         </DrawerContent>
       </Drawer>
-
-          <span className="c16">
-            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-            &nbsp; &nbsp; &nbsp;
-          </span>
-        <p className="c0 c5">
-          <span className="c2" />
-        </p>
+      <div className="fixed bottom-4 left-4">
+            <NavLink href={route('surat.index')}>
+                                <Button className="bg-mainblue font-sans w-[120px]" leftIcon={<TbArrowBackUp />} colorScheme='alpha' variant='solid'>
+                                    Kembali
+                                </Button>
+                                </NavLink>
+            </div>
+            <div className="fixed top-4 left-4">
+            <Button ref={btnRef} onClick={onOpen} className="bg-mainblue font-sans w-[50px]" colorScheme='alpha' variant='solid'>
+                                <TbAlertCircle />
+                                </Button>
+            </div>
+             <div className="fixed bottom-5 right-4">
+             <Pdf targetRef={ref} filename="Surat Keterangan Kematian.pdf" paperSize="A4" margin="2cm">
+                {({ toPdf }) => (
+          <Button onClick={toPdf}  className="bg-mainblue font-sans w-[120px]" leftIcon={<TbFileDownload />} colorScheme='alpha' variant='solid'>
+                                    Download
+                                </Button>
+        )}
+                                </Pdf>
+            </div>
       </>
 
     )

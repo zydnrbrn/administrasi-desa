@@ -16,7 +16,6 @@ export default function Resident(props) {
         return match && decodeURIComponent(match[1].replace(/\+/g, ' '))
     }
 
-    console.log(props)
     const route = useRoute()
     const search = getParameterByName('search') || '';
 

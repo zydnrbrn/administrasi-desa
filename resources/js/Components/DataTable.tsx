@@ -19,7 +19,6 @@ import {
   import { InertiaLink } from '@inertiajs/inertia-react'
 
 const Tables = ({ residents }) => {
-    console.log(residents)
     let [isOpen, setOpen] = useState(false)
     function closeModal()  {
         setOpen(false)

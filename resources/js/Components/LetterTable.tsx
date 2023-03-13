@@ -17,7 +17,6 @@ import {
 
 const LetterTables = ({ data }) => {
     const route = useRoute()
-    console.log(data)
     // delete resident
     const showLetter = async (id) => {
         Inertia.get(`/surat/${ id }`)

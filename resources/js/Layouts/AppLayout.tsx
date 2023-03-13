@@ -1,5 +1,5 @@
 import { Inertia } from '@inertiajs/inertia'
-import { Head } from '@inertiajs/inertia-react'
+import { Head, usePage } from '@inertiajs/inertia-react'
 import React, { PropsWithChildren } from 'react'
 import useRoute from '@/Hooks/useRoute'
 import Banner from '@/Components/Banner'
@@ -9,7 +9,15 @@ import {
     IconButton,
     Box,
     useDisclosure,
-    Collapse
+    Collapse,
+    Menu,
+    MenuButton,
+    MenuList,
+    MenuItem,
+    MenuItemOption,
+    MenuGroup,
+    MenuOptionGroup,
+    MenuDivider,
  } from '@chakra-ui/react'
 import NavLink from '@/Components/NavLink'
 import {
@@ -34,11 +42,8 @@ export default function AppLayout({
 }: PropsWithChildren<Props>) {
 
   const route = useRoute();
+  const user = usePage().props.user
   const {isOpen, onToggle} = useDisclosure();
-//   const toggleSidebar= () => {
-//     setOpen(!isOpen);
-//   }
-
 
   function logout(e: React.FormEvent) {
     e.preventDefault();
@@ -51,7 +56,7 @@ export default function AppLayout({
       <Banner />
       <div className="flex min-h-screen">
       <Collapse in={isOpen} >
-      <Box className={`min-h-screen p-10 bg-mainblue text-putih rounded-[10px] ml-[10px] my-5 ${isOpen ? '' : '' }`} >
+      <Box className={`min-h-screen max-w-lg p-10 bg-mainblue text-putih rounded-[10px] ml-[10px] my-5 ${isOpen ? '' : '' }`} >
         <div className="flex justify-center ml-[10px]">
         <ApplicationMark/>
          <InertiaLink href={route('dashboard')}>
@@ -74,20 +79,28 @@ export default function AppLayout({
             </NavLink>
             </ButtonGroup>
         </div>
-        <div className="absolute bottom-10 flex-none">
-        <form onSubmit={logout}>
-            <Button className='w-[200px] rounded-[10px] font-medium hover:bg-putih/30' type='submit' colorScheme='Alpha' ><TbDoorEnter className='w-[40px] h-[40px] pr-[10px]'/><h1 className='font-bold'>Logout</h1></Button>
-        </form>
-        </div>
       </Box>
       </Collapse>
-        <section className='ml-4 overflow-hidden'>
+        <section className='ml-4 max-w-4xl overflow-hidden'>
         {renderHeader ? (
           <header className='pt-10'>
             <div className="flex flex-column">
            <IconButton onClick={onToggle} color={'#0038FF'} className='mx-5 w-[40px] h-[40px]' aria-label="close sidebar" colorScheme='alpha' icon={ <FaAlignLeft className='w-[40px] h-[40px]' />} />
               {renderHeader()}
               </div>
+              <div className="right-10 top-10 absolute flex-none">
+              <Menu>
+  <MenuButton as={Button} colorscheme='alpha' rightIcon={<TbUsers />}>
+    {user.name}
+  </MenuButton>
+  <MenuList>
+    <form onSubmit={logout}>
+            <Button className='w-[200px] rounded-[10px] bg-red-900 relative bottom-0 font-medium' type='submit' colorScheme='red' ><TbDoorEnter className='w-[30px] h-[30px] text-sm pr-[10px]'/><h1 className='font-bold'>Logout</h1></Button>
+        </form>
+  </MenuList>
+</Menu>
+        </div>
+        <span className="font-sans text-mainblue bottom-5 fixed right-4">0.3 - DEVELOPMENT</span>
           </header>
         ) : null}
             {children}

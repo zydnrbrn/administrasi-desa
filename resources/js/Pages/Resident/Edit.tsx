@@ -11,12 +11,6 @@ import {
     Radio,
     RadioGroup,
     Select,
-    Alert,
-    AlertIcon,
-    AlertTitle,
-    AlertDescription,
-    Fade,
-    useToast
  } from '@chakra-ui/react'
  import { Inertia } from "@inertiajs/inertia"
  import AppLayout from "@/Layouts/AppLayout"
@@ -41,8 +35,6 @@ export default function Store(props) {
    const [goldar, setGoldar] = useState('')
    const [RT, setRT] = useState('')
    const [RW, setRW] = useState('')
-
-   console.log(props.resident )
 
    const editResident = async (e) => {
     e.preventDefault();
@@ -83,42 +75,20 @@ export default function Store(props) {
           <div className="greeting ml-[20px]">
             <h3 className='text-[25px]'>Harap pastikan data yang dimasukan sudah benar dan sesuai.</h3>
           </div>
-          {/* {errors && (
-            <Fade in={errors} animateOpacity>
-               <Alert className="rounded-md my-5" status='error'>
-               <AlertIcon />
-               <AlertTitle>Gagal menambahkan data penduduk</AlertTitle>
-               <AlertDescription>
-               <span>{errors}</span>
-              </AlertDescription>
-             </Alert>
-             </Fade>
-          )} */}
           <div className='content gap-[20px] ml-[20px] mt-[40px]'>
         <div className='total-residents w-[1000px] bg-abu rounded-[25px]'>
         <div className='inline '>
         <form className="m-[15px]" onSubmit={editResident}>
       <label>NIK:</label>
-      <NumberInput  value={nik} onChange={(e) => setNik(e)} >
+      <NumberInput isDisabled value={nik} onChange={(e) => setNik(e)} >
   <NumberInputField placeholder={resident.NIK} />
   <NumberInputStepper>
     <NumberIncrementStepper />
     <NumberDecrementStepper />
   </NumberInputStepper>
 </NumberInput>
-{/* {errors && (
-            <Fade in={errors.nik} animateOpacity>
-               <Alert className="rounded-md my-5 absolute" status='error'>
-               <AlertIcon />
-               <AlertTitle>Gagal menambahkan data penduduk</AlertTitle>
-               <AlertDescription>
-                <span>{errors.nik}</span>
-              </AlertDescription>
-             </Alert>
-             </Fade>
-          )} */}
       <label>No KK :</label>
-      <NumberInput value={no_kk} onChange={(e) => setNoKK(e)}>
+      <NumberInput isDisabled value={no_kk} onChange={(e) => setNoKK(e)}>
   <NumberInputField placeholder={resident.KK_code} />
   <NumberInputStepper>
     <NumberIncrementStepper />
@@ -168,10 +138,10 @@ export default function Store(props) {
    <Input placeholder={resident.city} value={city} onChange={(e) => setCity(e.target.value)}/>
       <label>Kecamatan</label>
    <Input placeholder={resident.district} value={district} onChange={(e) => setDistrict(e.target.value)}/>
-      <label>Kampung</label>
-   <Input placeholder={resident.street} value={village} onChange={(e) => setVillage(e.target.value)}/>
     <label>Desa / Kelurahan</label>
    <Input placeholder={resident.village} value={village} onChange={(e) => setVillage(e.target.value)}/>
+   <label>Kampung</label>
+   <Input placeholder={resident.street} value={kampung} onChange={(e) =>setKampung(e.target.value)}/>
       <label>RT</label>
    <Input placeholder={resident.RT} value={RT} onChange={(e) => setRT(e.target.value)}/>
       <label>RW</label>
