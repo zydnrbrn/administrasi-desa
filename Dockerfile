@@ -8,13 +8,13 @@ RUN composer install --optimize-autoloader --no-dev --no-interaction
 FROM node:16.14.0 AS node
 WORKDIR /app
 COPY ./resources/js ./resources/js
-COPY ./package.json ./yarn.lock ./
-RUN yarn install --production --frozen-lockfile
-RUN yarn run production
+COPY ./package.json ./package-lock.json ./
+RUN npm install --production --frozen-lockfile
+RUN npm run production
 
 # Step 3: Build PHP-FPM Image
 FROM php:8.1-fpm
-LABEL maintainer="Your Name <your-email@example.com>"
+LABEL maintainer="zydnrbrn zidanreborn@gmail.com"
 
 # Install dependencies and enable necessary PHP extensions
 RUN apt-get update && apt-get install -y \
