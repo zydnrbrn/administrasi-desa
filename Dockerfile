@@ -10,7 +10,8 @@ WORKDIR /app
 COPY ./resources/js ./resources/js
 COPY ./package.json ./package-lock.json ./
 RUN npm install --production --frozen-lockfile
-RUN npm run production
+RUN npm run build
+RUN npm run dev
 
 # Step 3: Build PHP-FPM Image
 FROM php:8.1-fpm
