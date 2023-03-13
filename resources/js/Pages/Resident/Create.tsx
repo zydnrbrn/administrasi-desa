@@ -40,6 +40,7 @@ export default function Store(props) {
    const [goldar, setGoldar] = useState('')
    const [RT, setRT] = useState('')
    const [RW, setRW] = useState('')
+   const [kampung, setKampung] = useState('')
 
    console.log(errors)
 
@@ -61,6 +62,7 @@ export default function Store(props) {
         city: city,
         district: district,
         village: village,
+        kampung: kampung,
         RT: RT,
         RW: RW,
         blood_type: goldar,
@@ -159,6 +161,8 @@ export default function Store(props) {
    <Input value={district} onChange={(e) => setDistrict(e.target.value)}/>
       <label>Desa / Kelurahan</label>
    <Input value={village} onChange={(e) => setVillage(e.target.value)}/>
+   <label>Kampung</label>
+   <Input value={kampung} onChange={(e) => setKampung(e.target.value)}/>
       <label>RT</label>
    <Input value={RT} onChange={(e) => setRT(e.target.value)}/>
       <label>RW</label>

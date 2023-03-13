@@ -20,6 +20,7 @@ return new class extends Migration
 			$table->string('city', 100);
 			$table->string('district', 100);
 			$table->string('village', 100);
+            $table->string('street', 100);
 			$table->char('RT', 4)->nullable();
 			$table->char('RW', 4)->nullable();
 			$table->timestamps();

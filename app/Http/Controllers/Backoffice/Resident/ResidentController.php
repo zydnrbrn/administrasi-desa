@@ -12,16 +12,16 @@ use Illuminate\Support\Facades\Validator;
 
 class ResidentController extends Controller
 {
-    public function index() {
+    public function index(Request $request) {
         try
         {
             $query = Resident::query();
-            if (request('search')) {
-                $query->where('name', 'LIKE', '%'.request('search').'%');
+            if ($request->has('search')) {
+                $query->where('name', 'LIKE', '%'.request('search').'%')->orWhere('NIK', 'LIKE', '%'. request('search') . '%');
             }
             $data = DB::table('residents')->orderBy('name', 'asc')->paginate(10);
             return Inertia::render('Resident/Index', [
-                'residents'          => $data
+                'residents'          => $query->orderBy('name', 'asc')->paginate(10)
             ]);
         } catch(\Throwable $th) {
             return Inertia::render('Resident/Index', [
@@ -56,10 +56,11 @@ class ResidentController extends Controller
                 'job'                  => ['required'],
                 'citizenship'          => ['required'],
                 'valid_until'          => ['required'],
-                'province'             => ['required', 'string',],
-                'city'                 => ['required', 'string', ],
-                'district'             => ['required', 'string', ],
-                'village'              => ['required', 'string', ],
+                'province'             => ['required', 'string'],
+                'city'                 => ['required', 'string'],
+                'district'             => ['required', 'string'],
+                'village'              => ['required', 'string'],
+                'kampung'              => ['required', 'string'],
                 'RT'                   => ['required', 'string', 'max:6'],
                 'RW'                   => ['required', 'string', 'max:6'],
                 'blood_type'           => ['required']
@@ -85,6 +86,7 @@ class ResidentController extends Controller
             $city = $request->city;
             $village = $request->village;
             $district = $request->district;
+            $street = $request->kampung;
             $rt = $request->RT;
             $rw = $request->RW;
             $goldar = $request->blood_type;
@@ -112,6 +114,7 @@ class ResidentController extends Controller
                 'city' => $city,
                 'district' => $district,
                 'village' => $village,
+                'street'  => $street,
                 'RT' => $rt,
                 'RW' => $rw
             ]);
@@ -148,7 +151,7 @@ class ResidentController extends Controller
 
 
     public function update(Request $request, $penduduk) {
-        DB::beginTransaction();
+        // DB::beginTransaction();
         try {
             $validator = Validator::make($request->all(), [
                 'nik'                  => ['nullable', 'integer', 'unique:residents,NIK'],
@@ -161,10 +164,11 @@ class ResidentController extends Controller
                 'job'                  => ['nullable'],
                 'citizenship'          => ['nullable'],
                 'valid_until'          => ['nullable'],
-                'province'             => ['nullable', 'string',],
-                'city'                 => ['nullable', 'string', ],
-                'district'             => ['nullable', 'string', ],
-                'village'              => ['nullable', 'string', ],
+                'province'             => ['nullable', 'string'],
+                'city'                 => ['nullable', 'string'],
+                'district'             => ['nullable', 'string'],
+                'village'              => ['nullable', 'string'],
+                'kampung'              => ['nullable', 'string'],
                 'RT'                   => ['nullable', 'string', 'max:6'],
                 'RW'                   => ['nullable', 'string', 'max:6'],
                 'blood_type'           => ['nullable']
@@ -172,7 +176,7 @@ class ResidentController extends Controller
 
             if($validator->fails()) {
                 return redirect()->route('letter')->with([
-                    'fails'     => $validator->errors()
+                    'errors'     => $validator->errors()
                 ]);
             }
 
@@ -191,14 +195,15 @@ class ResidentController extends Controller
             $city = $request->city;
             $village = $request->village;
             $district = $request->district;
+            $street = $request->kampung;
             $rt = $request->RT;
             $rw = $request->RW;
             $goldar = $request->blood_type;
 
             $resident = Resident::find($r_id);
             $resident->update([
-                'NIK'                       => $nik,
-                'KK_code'                   => $no_kk,
+                // 'NIK'                       => $nik,
+                // 'KK_code'                   => $no_kk,
                 'name'                      => $nama,
                 'date_place_birth'          => $ttl,
                 'gender'                    => $gender,
@@ -216,23 +221,24 @@ class ResidentController extends Controller
                 'city' => $city,
                 'district' => $district,
                 'village' => $village,
+                'street'  => $street,
                 'RT' => $rt,
                 'RW' => $rw
             ]);
 
             if($resident) {
                 return redirect()->route('penduduk.index')->with([
-                    'success'       => 'Berhasil menambahkan data penduduk !'
+                    'success'       => 'Berhasil mengubah data penduduk !'
                 ]);
             } else {
-                return redirect()->route('penduduk.index')->with([
-                    'failed'        => 'Gagal menambahkan data penduduk !'
+                return Inertia::render('Resident/Edit', [
+                    'errors'    => 'Gagal mengubah data penduduk !'
                 ]);
             }
 
-            DB::commit();
+            // DB::commit();
         } catch (\Throwable $th) {
-            DB::rollBack();
+            // DB::rollBack();
             return Inertia::render('Resident/Edit', [
                 'errors'    => $th->getMessage()
             ]);

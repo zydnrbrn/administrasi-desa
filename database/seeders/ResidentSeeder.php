@@ -3,9 +3,11 @@
 namespace Database\Seeders;
 
 use App\Models\Resident;
+use App\Models\Address;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Faker\Factory as Faker;
+use Illuminate\Support\Facades\DB;
 
 class ResidentSeeder extends Seeder
 {
@@ -19,7 +21,7 @@ class ResidentSeeder extends Seeder
         for ($i = 0; $i < 1000; $i++) {
 
         $faker = Faker::create();
-        Resident::create([
+        $resident = Resident::create([
             'nik'       => rand(1, 1000),
             'KK_code'   => rand(1, 1000),
             'name'      => $faker->name(),
@@ -32,6 +34,7 @@ class ResidentSeeder extends Seeder
             'valid_until'   => $faker->date(),
             'blood_type'    => 'A+'
         ]);
+
     }
     }
 }
